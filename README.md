@@ -10,4 +10,4 @@ Currently the application is not in a working state, but you can build the curre
 
 The script comes with two flags: ``--clean`` and ``--run``.
 
-Run it with ``./dpbuild --clean --run`` to build the software for your system and run the file once complete.
+Run it with ``./dpbuild --clean --run`` **from the root source folder** to build the software for your system and run the file once complete.
