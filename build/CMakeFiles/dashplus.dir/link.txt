@@ -1,0 +1,1 @@
+/usr/bin/c++    -rdynamic CMakeFiles/dashplus.dir/main.cpp.o  -o dashplus  -Wl,-rpath,/home/blaze/Documents/repos/dashplus/allwpilib-2021.1.2/build/lib:/home/blaze/Documents/repos/dashplus/raylib/build/src ../allwpilib-2021.1.2/build/lib/libntcore.so ../raylib/build/src/libraylib.so 

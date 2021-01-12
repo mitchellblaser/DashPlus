@@ -1,0 +1,3 @@
+/home/blaze/Documents/repos/dashplus/build/CMakeFiles/rebuild_cache.dir
+/home/blaze/Documents/repos/dashplus/build/CMakeFiles/edit_cache.dir
+/home/blaze/Documents/repos/dashplus/build/CMakeFiles/dashplus.dir
