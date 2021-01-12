@@ -2,7 +2,7 @@
 
 <h5>An improved FRC Dashboard with user-customizeable controls.</h5>
 
-
+This project makes use of *Raylib* and *WPILib*, and requires cmake and g++ installed. This repo includes pre-built source for both platforms to run under linux, however to compile for a different target system you may need to recompile, also using cmake. For instructions on how to do this, refer to each library's repositories.
 
 <h4>Installation Instructions:</h4>
 
