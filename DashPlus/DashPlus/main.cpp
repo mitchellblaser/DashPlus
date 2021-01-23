@@ -35,8 +35,14 @@ int main() {
 	if (ntTable->GetBoolean("RIO_CONNECTED", 0) == 0) {
 		std::cout << "[WARNING] No Connection to RoboRio! (RIO_CONNECTED=" << ntTable->GetBoolean("RIO_CONNECTED", 0) << ")\n";
 	}
+	if (ntTable->GetBoolean("RIO_CONNECTED", 0) == 1) {
+		std::cout << "[MESSAGE] Connected to RoboRio! (RIO_CONNECTED=" << ntTable->GetBoolean("RIO_CONNECTED", 0) << ")\n";
+	}
 
 	while (!WindowShouldClose()) {
+
+		std::cout << ntTable->GetNumber("TEST", 0) << "\n";
+
 		BeginDrawing();
 
 		ClearBackground(RAYWHITE);
