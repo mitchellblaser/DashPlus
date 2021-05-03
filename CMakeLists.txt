@@ -7,9 +7,11 @@ project(DashPlus)
 
 find_package(Threads REQUIRED)
 
-add_executable(DashPlus main.cpp)
+FILE(GLOB DASHPLUS_SOURCES cpp/*.cpp)
+
+add_executable(DashPlus main.cpp ${DASHPLUS_SOURCES})
 target_include_directories(DashPlus PUBLIC
-                           ${PROJECT_BINARY_DIR}
+                           ${PROJECT_SOURCE_DIR}/include                           
                            ${PROJECT_SOURCE_DIR}/raylib/build/raylib/include
                           )
 
