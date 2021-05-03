@@ -7,7 +7,7 @@ Fonts fonts;
 
 using namespace std;
 
-int main() {
+int main(int argc, char* argv[]) {
     std::cout << "DashPlus" << std::endl
     << "http://github.com/mitchellblaser" << std::endl;
 
@@ -15,7 +15,7 @@ int main() {
     InitWindow(800, 450, "DashPlus");
     SetTargetFPS(60);
 
-    fonts.Load();
+    fonts.Load(argv[1]);
 
     while (!WindowShouldClose()) {
         BeginDrawing();

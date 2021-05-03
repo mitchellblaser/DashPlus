@@ -2,9 +2,14 @@
 
 Fonts::Fonts() {}
 
-void Fonts::Load() {
-    fontStore[0] = LoadFontEx("resources/fonts/Livvic-Light.ttf", 32, 0, 250);
-    fontStore[1] = LoadFontEx("resources/fonts/LEMONMILK-Bold.otf", 80, 0, 250);
+void Fonts::Load(string dataPath) {
+    cout << "DPENV: " << dataPath << endl;
+
+    string PATH0 = dataPath + "resources/fonts/Livvic-Light.ttf";
+    string PATH1 = dataPath + "resources/fonts/LEMONMILK-Bold.otf";
+
+    fontStore[0] = LoadFontEx(PATH0.c_str(), 32, 0, 250);
+    fontStore[1] = LoadFontEx(PATH1.c_str(), 80, 0, 250);
 }
 
 void Fonts::Unload() {
