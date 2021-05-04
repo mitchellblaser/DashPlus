@@ -1,11 +1,32 @@
 #include "gui.h"
 
+/**
+* Construct a new GUI Class.
+*
+* Used to create and handle custom Raylib wrappers for 
+* easier GUI creation inside the library.
+*/
 GUI::GUI() {
     for (int i = 0; i < MAX_ELEMENTS; i++) {
         ElementCache[i] = "$DPEMPTY$";
     }
 }
 
+/**
+* Create a Button and Draw on the Raylib window.
+*
+* @param <int> ID: Unique ID Number for the element.
+* @param <int> PosX: X Position of the Button.
+* @param <int> PosY: Y Position of the Button.
+* @param <std::string> ButtonText: Text to appear inside the button.
+* @param <int> Width: Width of the Button.
+* @param <int> Height: Height of the Button.
+* @param <raylib::Color> ButtonColor: Background color of the Button.
+* @param <raylib::Font> ButtonFont: Font for the Button to use.
+* @param <int> FontSize: Font size for the Button to use.
+* @param <raylib::Color> TextColor: Foreground color of the Button.
+* @param <void(*)()> *onclick: Pointer to a function to run when the button is clicked. Optional.
+*/
 void GUI::Button(int ID, int PosX, int PosY, string ButtonText, int Width, int Height, Color ButtonColor, Font ButtonFont, int FontSize, Color TextColor, void (*onclick)()) {
     ButtonsX1[ID] = PosX;
     ButtonsY1[ID] = PosY;
@@ -27,6 +48,20 @@ void GUI::Button(int ID, int PosX, int PosY, string ButtonText, int Width, int H
                FontSize, 1, TextColor);
 }
 
+/**
+* Create a Text Box and Draw on the Raylib window.
+*
+* @param <int> ID: Unique ID Number for the element.
+* @param <int> PosX: X Position of the Text Box.
+* @param <int> PosY: Y Position of the Text Box.
+* @param <std::string> PlaceholderText: Text to appear inside the text box by default.
+* @param <int> Width: Width of the Text Box.
+* @param <int> Height: Height of the Text Box.
+* @param <raylib::Color> BoxColor: Background color of the Text Box.
+* @param <raylib::Font> TextFont: Font for the Text Box to use.
+* @param <int> FontSize: Font size for the Text Box to use.
+* @param <raylib::Color> TextColor: Foreground color of the Text Box.
+*/
 void GUI::TextBox(int ID, int PosX, int PosY, string PlaceholderText, int Width, int Height, Color BoxColor, Font TextFont, int FontSize, Color TextColor) {
     ButtonsX1[ID] = PosX;
     ButtonsY1[ID] = PosY;
@@ -48,6 +83,12 @@ void GUI::TextBox(int ID, int PosX, int PosY, string PlaceholderText, int Width,
                FontSize, 1, TextColor);
 }
 
+/**
+* Mainly used inside the GUI Class, but can also 
+* be used elsewhere. Detects when the mouse clicks an element.
+*
+* @return <int> Index of Element Clicked.
+*/
 int GUI::GetClickedElement() {
     int MouseX = GetMouseX();
     int MouseY = GetMouseY();
@@ -63,6 +104,12 @@ int GUI::GetClickedElement() {
     return -1;
 }
 
+/**
+* Main Event Loop for the Application's GUI Stuff. 
+* Also handles running functions when an event (such as OnClick) is met.
+*
+* @param <std::string> DPATH: Root data path to reference for font loading, etc.
+*/
 void GUI::MainEventLoop(string DPATH) {
     int Element = GetClickedElement();
 
@@ -70,7 +117,7 @@ void GUI::MainEventLoop(string DPATH) {
         SelectedUserInput = -1;
         if (ElementType[Element] == ElementTypes::Button) {
             if (EventsList[Element] != 0) {
-                (*EventsList[Element])();
+                (*EventsList[Element])(); // Run OnClick Command if not NULL.
             }
         }
         else if (ElementType[Element] == ElementTypes::TextBox) {
