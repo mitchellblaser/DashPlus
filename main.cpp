@@ -41,8 +41,10 @@ int main(int argc, char* argv[]) {
         DrawTextEx(fonts.Title(), "DashPlus", (Vector2){20,7}, 80, 2, RAYWHITE);
         DrawTextEx(fonts.Body(), "An FRC Dashboard.", (Vector2){23,77}, 32, 2, RAYWHITE);
 
-        gui.Button(0, 200, 200, "Update Settings", 100, 50, RAYWHITE, fonts.BodySmall(), 15, BLACK);
-        gui.TextBox(1, 280, 250, "Hello World|", 200, 35, WHITE, fonts.BodySmall(), 15, BLACK);
+        DrawTextEx(fonts.BodySmall(), "Server IP Address:", (Vector2){23,134}, 16, 1, RAYWHITE);
+        gui.TextBox(1, 145, 125, "", 200, 35, WHITE, fonts.BodySmall(), 16, BLACK);
+
+        gui.Button(0, GetScreenWidth()-120, 20, "Save Settings", 100, 50, RAYWHITE, fonts.BodySmall(), 15, BLACK);
 
 
         EndDrawing();

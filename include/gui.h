@@ -10,6 +10,7 @@ http://github.com/mitchellblaser/dashplus
 #include <stdlib.h>
 #include <chrono>
 #include "fonts.h"
+#include "timer.h"
 
 using namespace std;
 
@@ -32,6 +33,7 @@ class GUI {
         int GetClickedElement();
     private:
         Fonts fonts;
+        Timer debounceTimer{100, true};
         bool _initComplete = false;
         int GUIButtonCount = 0;
         int ButtonsX1[MAX_ELEMENTS] = {};

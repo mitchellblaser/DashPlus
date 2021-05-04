@@ -11,7 +11,7 @@ void Fonts::Load(string dataPath) {
 
     fontStore[0] = LoadFontEx(PATH0.c_str(), 32, 0, 250);
     fontStore[1] = LoadFontEx(PATH1.c_str(), 80, 0, 250);
-    fontStore[2] = LoadFontEx(PATH2.c_str(), 15, 0, 250);
+    fontStore[2] = LoadFontEx(PATH2.c_str(), 16, 0, 250);
 }
 
 void Fonts::Unload() {

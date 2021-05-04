@@ -78,7 +78,7 @@ void GUI::MainEventLoop(string DPATH) {
             SelectedUserInput = Element;
         }
     }
-    else {
+    else { //TODO: Add ENTER Key Handles - Defocus Text Box.
         //If we're not handling a click this iteration
         if (SelectedUserInput != -1) {
             int code = GetCharPressed();
@@ -86,27 +86,14 @@ void GUI::MainEventLoop(string DPATH) {
                 UserInputBuffer = UserInputBuffer + char(code);
             } else {
                 if (IsKeyDown(KEY_BACKSPACE)) {
-                    run = chrono::duration_cast<chrono::milliseconds> (
-                        chrono::system_clock::now().time_since_epoch()
-                    );
+                    debounceTimer.Tick();
 
-                    int adj = 8*runCounter;
-                    if (adj > 100) {
-                        adj = 0;
-                    }
-
-                    if (oldrun+chrono::milliseconds(100-adj) < run) {
-                        oldrun = run;
+                    if (debounceTimer.AtTarget()) {
                         UserInputBuffer = UserInputBuffer.substr(0, UserInputBuffer.size()-1);
-                        runCounter++;
-                    }                    
-
+                        debounceTimer.RunComplete();
+                    }
                 }
-                else {
-                    oldrun = chrono::milliseconds(0);
-                    run = chrono::milliseconds(0);
-                    runCounter = 0;
-                }
+                else { debounceTimer.Reset(); }
             }
             ElementCache[SelectedUserInput] = UserInputBuffer;
         }
