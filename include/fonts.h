@@ -12,6 +12,9 @@ http://github.com/mitchellblaser/dashplus
 
 using namespace std;
 
+#ifndef DP_FONTS
+#define DP_FONTS
+
 class Fonts {
     public:
         Fonts();
@@ -22,3 +25,5 @@ class Fonts {
     private:
         Font fontStore[1] = {0};
 };
+
+#endif

@@ -2,8 +2,10 @@
 #include <raylib.h>
 
 #include "fonts.h"
+#include "file.h"
 
 Fonts fonts;
+File file;
 
 using namespace std;
 
@@ -19,9 +21,11 @@ int main(int argc, char* argv[]) {
 
     while (!WindowShouldClose()) {
         BeginDrawing();
-        ClearBackground(RAYWHITE);
+
+        ClearBackground(ColorFromHSV(354, 0.2, 1.0));
         DrawTextEx(fonts.Title(), "DashPlus", (Vector2){20,10}, 80, 2, BLACK);
         DrawTextEx(fonts.Body(), "An FRC Dashboard.", (Vector2){20,90}, 32, 2, BLACK);
+        
         EndDrawing();
     }
 
