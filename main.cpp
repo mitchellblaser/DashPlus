@@ -46,7 +46,6 @@ int main(int argc, char* argv[]) {
 
         gui.Button(0, GetScreenWidth()-120, 20, "Save Settings", 100, 50, RAYWHITE, fonts.BodySmall(), 15, BLACK);
 
-
         EndDrawing();
 
         if (WindowShouldClose()) {
