@@ -125,8 +125,8 @@ void GUI::MainEventLoop(string DPATH) {
             SelectedUserInput = Element;
         }
     }
-    else { //TODO: Add ENTER Key Handles - Defocus Text Box.
-        //If we're not handling a click this iteration
+    else {
+        //If we're not handling a click this iteration we run this
         if (SelectedUserInput != -1) {
             int code = GetCharPressed();
             if (code != 0) {
