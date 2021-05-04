@@ -69,7 +69,9 @@ void GUI::MainEventLoop(string DPATH) {
     if (Element != -1) {
         std::cout << Element << std::endl;
         if (ElementType[Element] == ElementTypes::Button) {
-            (*EventsList[Element])();
+            if (EventsList[Element] != 0) {
+                (*EventsList[Element])();
+            }
         }
 
     }
