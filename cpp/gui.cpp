@@ -80,7 +80,7 @@ void GUI::MainEventLoop(string DPATH) {
     else {
         //If we're not handling a click this iteration
         if (SelectedUserInput != -1) {
-            int code = GetCharPressed();
+            int code = GetCharPressed(); //TODO: Backspace support
             if (code != 0) {
                 UserInputBuffer = UserInputBuffer + char(code);
             }
