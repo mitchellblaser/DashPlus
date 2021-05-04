@@ -3,9 +3,11 @@
 
 #include "fonts.h"
 #include "file.h"
+#include "gui.h"
 
 Fonts fonts;
 File file;
+GUI gui;
 
 using namespace std;
 
@@ -34,9 +36,11 @@ int main(int argc, char* argv[]) {
     while (NeedsSetup) {
         BeginDrawing();
 
-        ClearBackground(ColorFromHSV(354, 0.2, 1.0));
-        DrawTextEx(fonts.Title(), "DashPlus", (Vector2){20,10}, 80, 2, BLACK);
-        DrawTextEx(fonts.Body(), "An FRC Dashboard.", (Vector2){20,90}, 32, 2, BLACK);
+        ClearBackground(ColorFromHSV(232, 0.54, 0.41));
+        DrawTextEx(fonts.Title(), "DashPlus", (Vector2){20,7}, 80, 2, RAYWHITE);
+        DrawTextEx(fonts.Body(), "An FRC Dashboard.", (Vector2){23,77}, 32, 2, RAYWHITE);
+
+        gui.Button(0, 200, 200, "Update Settings", 100, 50, RAYWHITE, fonts.BodySmall(), 14, BLACK);
 
         EndDrawing();
         

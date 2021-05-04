@@ -22,8 +22,9 @@ class Fonts {
         void Unload();
         Font Body();
         Font Title();
+        Font BodySmall();
     private:
-        Font fontStore[1] = {0};
+        Font fontStore[2] = {0};
 };
 
 #endif
