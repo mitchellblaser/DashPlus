@@ -150,7 +150,7 @@ void GUI::MainEventLoop(string DPATH) {
                 }
                 else { debounceTimer.Reset(); }
                 if (IsKeyDown(KEY_ENTER)) {
-                    //kill blinker
+                    SelectedUserInput = -1;
                 }
             }
             ElementCache[SelectedUserInput] = UserInputBuffer;
@@ -177,4 +177,8 @@ void GUI::MainEventLoop(string DPATH) {
             }
         }
     }
+}
+
+void _killBlinker() {
+
 }

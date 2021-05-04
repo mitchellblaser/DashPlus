@@ -48,6 +48,8 @@ class GUI {
         int SelectedUserInput = -1;
         bool BlinkerState = false;
         int PreviousBlinkCapture = -1;
+        void _killBlinker();
+        bool killBlinker = false;
 };
 
 #endif
