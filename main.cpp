@@ -11,6 +11,10 @@ GUI gui;
 
 using namespace std;
 
+void Debug() {
+    std::cout << gui.GetTextFromID(1) << std::endl;
+}
+
 int main(int argc, char* argv[]) {
     std::cout << "DashPlus" << std::endl
     << "http://github.com/mitchellblaser" << std::endl;
@@ -44,7 +48,7 @@ int main(int argc, char* argv[]) {
         DrawTextEx(fonts.BodySmall(), "Server IP Address:", (Vector2){23,134}, 16, 1, RAYWHITE);
         gui.TextBox(1, 145, 125, "", 200, 35, WHITE, fonts.BodySmall(), 16, BLACK);
 
-        gui.Button(0, GetScreenWidth()-120, 20, "Save Settings", 100, 50, RAYWHITE, fonts.BodySmall(), 15, BLACK);
+        gui.Button(0, GetScreenWidth()-120, 20, "Save Settings", 100, 50, RAYWHITE, fonts.BodySmall(), 15, BLACK, &Debug);
 
         EndDrawing();
 
