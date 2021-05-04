@@ -130,19 +130,51 @@ void GUI::MainEventLoop(string DPATH) {
         if (SelectedUserInput != -1) {
             int code = GetCharPressed();
             if (code != 0) {
-                UserInputBuffer = UserInputBuffer + char(code);
+                if (BlinkerState) {
+                    UserInputBuffer = UserInputBuffer.substr(0, UserInputBuffer.size()-1) + char(code) + "|";
+                } else {
+                    UserInputBuffer = UserInputBuffer + char(code);
+                }
             } else {
                 if (IsKeyDown(KEY_BACKSPACE)) {
                     debounceTimer.Tick();
 
                     if (debounceTimer.AtTarget()) {
-                        UserInputBuffer = UserInputBuffer.substr(0, UserInputBuffer.size()-1);
+                        if (BlinkerState) {
+                            UserInputBuffer = UserInputBuffer.substr(0, UserInputBuffer.size()-2) + "|";
+                        } else {
+                            UserInputBuffer = UserInputBuffer.substr(0, UserInputBuffer.size()-1);
+                        }
                         debounceTimer.RunComplete();
                     }
                 }
                 else { debounceTimer.Reset(); }
+                if (IsKeyDown(KEY_ENTER)) {
+                    //kill blinker
+                }
             }
             ElementCache[SelectedUserInput] = UserInputBuffer;
+
+            inputBlinker.Tick();
+            if (inputBlinker.AtTarget()) {
+                if (BlinkerState) {
+                    BlinkerState = false;
+                    UserInputBuffer = UserInputBuffer.substr(0, UserInputBuffer.size()-1);
+                    PreviousBlinkCapture = SelectedUserInput;
+                } else {
+                    BlinkerState = true;
+                    UserInputBuffer = UserInputBuffer + "|";
+                    PreviousBlinkCapture = SelectedUserInput;
+                }                
+                inputBlinker.RunComplete();
+            }
+        } else {
+            if (BlinkerState) {
+                UserInputBuffer = UserInputBuffer.substr(0, UserInputBuffer.size()-1);
+                ElementCache[PreviousBlinkCapture] = UserInputBuffer;
+                PreviousBlinkCapture = -1;
+                BlinkerState = false;
+            }
         }
     }
 }

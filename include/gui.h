@@ -34,6 +34,7 @@ class GUI {
     private:
         Fonts fonts;
         Timer debounceTimer{100, true};
+        Timer inputBlinker{750};
         bool _initComplete = false;
         int GUIButtonCount = 0;
         int ButtonsX1[MAX_ELEMENTS] = {};
@@ -45,6 +46,8 @@ class GUI {
         void (*EventsList[MAX_ELEMENTS])();
         string UserInputBuffer = "";
         int SelectedUserInput = -1;
+        bool BlinkerState = false;
+        int PreviousBlinkCapture = -1;
 };
 
 #endif
