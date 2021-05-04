@@ -7,6 +7,7 @@ http://github.com/mitchellblaser/dashplus
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <iostream>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -25,6 +26,7 @@ class File {
         bool FolderExists(string filePath);
         bool IsFile(string filePath);
         bool IsFolder(string filePath);
+        bool MakeFolder(string filePath);
     private:
         bool _PathExists(string filePath);
         FileType _CheckFile(string filePath);

@@ -44,3 +44,11 @@ File::FileType File::_CheckFile(string filePath) {
     }
 }
 
+bool File::MakeFolder(string filePath) {
+    mkdir(filePath.c_str(), 0777);
+    if (FolderExists(filePath)) {
+        return true;
+    } else {
+        return false;
+    }
+}
