@@ -9,6 +9,8 @@ Fonts fonts;
 File file;
 GUI gui;
 
+string DPATH;
+
 using namespace std;
 
 void Debug() {
@@ -19,13 +21,19 @@ int main(int argc, char* argv[]) {
     std::cout << "DashPlus" << std::endl
     << "http://github.com/mitchellblaser" << std::endl;
 
-    string DPATH = argv[1];
+    std::cout << argc << std::endl;
+
+    if (argc == 1) {
+        DPATH = "../";
+    } else {
+        DPATH = argv[1];
+    }
 
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     InitWindow(800, 450, "DashPlus");
     SetTargetFPS(60);
 
-    fonts.Load(argv[1]);
+    fonts.Load(DPATH);
 
     bool NeedsSetup = false;
     if (!file.FolderExists(DPATH + ".dpdata")) {
