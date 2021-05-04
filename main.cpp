@@ -40,10 +40,13 @@ int main(int argc, char* argv[]) {
         DrawTextEx(fonts.Title(), "DashPlus", (Vector2){20,7}, 80, 2, RAYWHITE);
         DrawTextEx(fonts.Body(), "An FRC Dashboard.", (Vector2){23,77}, 32, 2, RAYWHITE);
 
-        gui.Button(0, 200, 200, "Update Settings", 100, 50, RAYWHITE, fonts.BodySmall(), 14, BLACK);
+        gui.Button(0, 200, 200, "Update Settings", 100, 50, RAYWHITE, fonts.BodySmall(), 15, BLACK);
+        gui.TextBox(1, 280, 250, "Hello World", 200, 35, WHITE, fonts.BodySmall(), 15, BLACK);
+
+        gui.MainEventLoop(DPATH);
 
         EndDrawing();
-        
+
         if (WindowShouldClose()) {
             CloseWindow();
             return 0;
