@@ -35,6 +35,7 @@ int main(int argc, char* argv[]) {
 
     while (NeedsSetup) {
         BeginDrawing();
+        gui.MainEventLoop(DPATH);
 
         ClearBackground(ColorFromHSV(232, 0.54, 0.41));
         DrawTextEx(fonts.Title(), "DashPlus", (Vector2){20,7}, 80, 2, RAYWHITE);
@@ -43,7 +44,6 @@ int main(int argc, char* argv[]) {
         gui.Button(0, 200, 200, "Update Settings", 100, 50, RAYWHITE, fonts.BodySmall(), 15, BLACK);
         gui.TextBox(1, 280, 250, "Hello World|", 200, 35, WHITE, fonts.BodySmall(), 15, BLACK);
 
-        gui.MainEventLoop(DPATH);
 
         EndDrawing();
 

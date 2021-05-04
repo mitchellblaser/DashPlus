@@ -55,7 +55,6 @@ int GUI::GetClickedElement() {
     if (MouseClicked) {
         for (int i = 0; i < MAX_ELEMENTS; i++) {
             if (MouseX > ButtonsX1[i] && MouseX < ButtonsX2[i] && MouseY > ButtonsY1[i] && MouseY < ButtonsY2[i]) {
-                // std::cout << "Pressed " << MouseX << " " << MouseY << " " << i << std::endl;
                 return i;
             }
         }
@@ -67,13 +66,25 @@ void GUI::MainEventLoop(string DPATH) {
     int Element = GetClickedElement();
 
     if (Element != -1) {
-        std::cout << Element << std::endl;
+        SelectedUserInput = -1;
         if (ElementType[Element] == ElementTypes::Button) {
             if (EventsList[Element] != 0) {
                 (*EventsList[Element])();
             }
         }
-
+        else if (ElementType[Element] == ElementTypes::TextBox) {
+            UserInputBuffer = ElementCache[Element];
+            SelectedUserInput = Element;
+        }
     }
-
+    else {
+        //If we're not handling a click this iteration
+        if (SelectedUserInput != -1) {
+            int code = GetCharPressed();
+            if (code != 0) {
+                UserInputBuffer = UserInputBuffer + char(code);
+            }
+            ElementCache[SelectedUserInput] = UserInputBuffer;
+        }
+    }
 }

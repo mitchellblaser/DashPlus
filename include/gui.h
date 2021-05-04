@@ -6,6 +6,8 @@ http://github.com/mitchellblaser/dashplus
 
 #include <raylib.h>
 #include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
 #include "fonts.h"
 
 using namespace std;
@@ -38,6 +40,8 @@ class GUI {
         ElementTypes ElementType[MAX_ELEMENTS] = {};
         string ElementCache[MAX_ELEMENTS] = {};
         void (*EventsList[MAX_ELEMENTS])();
+        string UserInputBuffer = "";
+        int SelectedUserInput = -1;
 };
 
 #endif
