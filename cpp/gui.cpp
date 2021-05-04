@@ -81,9 +81,32 @@ void GUI::MainEventLoop(string DPATH) {
     else {
         //If we're not handling a click this iteration
         if (SelectedUserInput != -1) {
-            int code = GetCharPressed(); //TODO: Backspace support
+            int code = GetCharPressed();
             if (code != 0) {
                 UserInputBuffer = UserInputBuffer + char(code);
+            } else {
+                if (IsKeyDown(KEY_BACKSPACE)) {
+                    run = chrono::duration_cast<chrono::milliseconds> (
+                        chrono::system_clock::now().time_since_epoch()
+                    );
+
+                    int adj = 8*runCounter;
+                    if (adj > 100) {
+                        adj = 0;
+                    }
+
+                    if (oldrun+chrono::milliseconds(100-adj) < run) {
+                        oldrun = run;
+                        UserInputBuffer = UserInputBuffer.substr(0, UserInputBuffer.size()-1);
+                        runCounter++;
+                    }                    
+
+                }
+                else {
+                    oldrun = chrono::milliseconds(0);
+                    run = chrono::milliseconds(0);
+                    runCounter = 0;
+                }
             }
             ElementCache[SelectedUserInput] = UserInputBuffer;
         }

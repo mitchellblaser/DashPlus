@@ -8,6 +8,7 @@ http://github.com/mitchellblaser/dashplus
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
+#include <chrono>
 #include "fonts.h"
 
 using namespace std;
@@ -42,6 +43,9 @@ class GUI {
         void (*EventsList[MAX_ELEMENTS])();
         string UserInputBuffer = "";
         int SelectedUserInput = -1;
+        chrono::milliseconds oldrun = chrono::milliseconds(0);
+        chrono::milliseconds run = chrono::milliseconds(0);
+        int runCounter = 0;
 };
 
 #endif
