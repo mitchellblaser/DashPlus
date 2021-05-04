@@ -39,7 +39,8 @@ void GUI::TextBox(int ID, int PosX, int PosY, string PlaceholderText, int Width,
     }
 
     Rectangle r = {PosX, PosY, Width, Height};
-    DrawRectangleRounded(r, 0.5, 4, BoxColor);
+    // DrawRectangleRounded(r, 0.5, 4, BoxColor);
+    DrawRectangle(PosX, PosY, Width, Height, BoxColor);
 
     Vector2 textBounds = MeasureTextEx(TextFont, ElementCache[ID].c_str(), FontSize, 1);
     DrawTextEx(TextFont, ElementCache[ID].c_str(),
