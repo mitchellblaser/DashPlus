@@ -6,12 +6,13 @@ GUI::GUI() {
     }
 }
 
-void GUI::Button(int ID, int PosX, int PosY, string ButtonText, int Width, int Height, Color ButtonColor, Font ButtonFont, int FontSize, Color TextColor) {
+void GUI::Button(int ID, int PosX, int PosY, string ButtonText, int Width, int Height, Color ButtonColor, Font ButtonFont, int FontSize, Color TextColor, void (*onclick)()) {
     ButtonsX1[ID] = PosX;
     ButtonsY1[ID] = PosY;
     ButtonsX2[ID] = PosX+Width;
     ButtonsY2[ID] = PosY+Height;
     ElementType[ID] = ElementTypes::Button;
+    EventsList[ID] = onclick;
 
     if (ElementCache[ID] == "$DPEMPTY$") {
         ElementCache[ID] = ButtonText;
@@ -67,7 +68,9 @@ void GUI::MainEventLoop(string DPATH) {
 
     if (Element != -1) {
         std::cout << Element << std::endl;
-        ElementCache[1] = "HELLO WORLD";
+        if (ElementType[Element] == ElementTypes::Button) {
+            std::cout << "Hello" << std::endl;
+        }
 
     }
 

@@ -23,7 +23,7 @@ enum ElementTypes {
 class GUI {
     public:
         GUI();
-        void Button(int ID, int PosX, int PosY, string ButtonText, int Width, int Height, Color ButtonColor, Font ButtonFont, int FontSize, Color TextColor);
+        void Button(int ID, int PosX, int PosY, string ButtonText, int Width, int Height, Color ButtonColor, Font ButtonFont, int FontSize, Color TextColor, void (*onclick)());
         void TextBox(int ID, int PosX, int PosY, string PlaceholderText, int Width, int Height, Color BoxColor, Font TextFont, int FontSize, Color TextColor);
         void MainEventLoop(string DPATH);
         int GetClickedElement();
@@ -37,6 +37,7 @@ class GUI {
         int ButtonsY2[MAX_ELEMENTS] = {};
         ElementTypes ElementType[MAX_ELEMENTS] = {};
         string ElementCache[MAX_ELEMENTS] = {};
+        void (*EventsList[MAX_ELEMENTS])();
 };
 
 #endif

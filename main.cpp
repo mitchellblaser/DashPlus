@@ -11,6 +11,10 @@ GUI gui;
 
 using namespace std;
 
+void TestFunction() {
+    std::cout << "This is a TestFunction." << std::endl;
+}
+
 int main(int argc, char* argv[]) {
     std::cout << "DashPlus" << std::endl
     << "http://github.com/mitchellblaser" << std::endl;
@@ -40,7 +44,7 @@ int main(int argc, char* argv[]) {
         DrawTextEx(fonts.Title(), "DashPlus", (Vector2){20,7}, 80, 2, RAYWHITE);
         DrawTextEx(fonts.Body(), "An FRC Dashboard.", (Vector2){23,77}, 32, 2, RAYWHITE);
 
-        gui.Button(0, 200, 200, "Update Settings", 100, 50, RAYWHITE, fonts.BodySmall(), 15, BLACK);
+        gui.Button(0, 200, 200, "Update Settings", 100, 50, RAYWHITE, fonts.BodySmall(), 15, BLACK, &TestFunction);
         gui.TextBox(1, 280, 250, "Hello World", 200, 35, WHITE, fonts.BodySmall(), 15, BLACK);
 
         gui.MainEventLoop(DPATH);
