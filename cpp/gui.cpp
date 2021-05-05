@@ -128,6 +128,13 @@ void GUI::MainEventLoop(string DPATH) {
     int Element = GetClickedElement(); //TODO: Click away from element to stop capturing input
     //TODO: Add OnFocusLost and OnFocusCaptured Events.
     if (Element != -1) {
+
+        if (ElementCache[SelectedUserInput] != "") {
+            if (ElementCache[SelectedUserInput].substr(UserInputBuffer.size()-1, UserInputBuffer.size()) == "|") {
+                ElementCache[SelectedUserInput] = ElementCache[SelectedUserInput].substr(0, UserInputBuffer.size()-1);
+            }
+        }
+
         SelectedUserInput = -1;
         if (ElementType[Element] == ElementTypes::Button) {
             if (EventsList[Element] != 0) {
