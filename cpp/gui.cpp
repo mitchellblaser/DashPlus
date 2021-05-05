@@ -48,6 +48,7 @@ void GUI::Button(int ID, int PosX, int PosY, string ButtonText, int Width, int H
                FontSize, 1, TextColor);
 }
 
+//TODO: Update docstring with label things
 /**
 * Create a Text Box and Draw on the Raylib window.
 *
@@ -62,10 +63,21 @@ void GUI::Button(int ID, int PosX, int PosY, string ButtonText, int Width, int H
 * @param <int> FontSize: Font size for the Text Box to use.
 * @param <raylib::Color> TextColor: Foreground color of the Text Box.
 */
-void GUI::TextBox(int ID, int PosX, int PosY, string PlaceholderText, int Width, int Height, Color BoxColor, Font TextFont, int FontSize, Color TextColor) {
-    ButtonsX1[ID] = PosX;
+void GUI::TextBox(int ID, int PosX, int PosY, string PlaceholderText, int Width, int Height,
+                  Color BoxColor, Font TextFont, int FontSize, Color TextColor,
+                  bool ShowLabel, string LabelText, int LabelPadding) {
+
+    int _PosX = PosX;
+
+    if (ShowLabel) {
+        Vector2 labelBounds = MeasureTextEx(TextFont, LabelText.c_str(), FontSize, 1);
+        DrawTextEx(TextFont, LabelText.c_str(), (Vector2){PosX,PosY+Height/2-labelBounds.y/2}, 16, 1, RAYWHITE);
+        _PosX = PosX+LabelPadding;
+    }
+
+    ButtonsX1[ID] = _PosX;
     ButtonsY1[ID] = PosY;
-    ButtonsX2[ID] = PosX+Width;
+    ButtonsX2[ID] = _PosX+Width;
     ButtonsY2[ID] = PosY+Height;
     ElementType[ID] = ElementTypes::TextBox;
 
@@ -73,13 +85,13 @@ void GUI::TextBox(int ID, int PosX, int PosY, string PlaceholderText, int Width,
         ElementCache[ID] = PlaceholderText;
     }
 
-    Rectangle r = {PosX, PosY, Width, Height};
+    Rectangle r = {_PosX, PosY, Width, Height};
     // DrawRectangleRounded(r, 0.5, 4, BoxColor);
-    DrawRectangle(PosX, PosY, Width, Height, BoxColor);
+    DrawRectangle(_PosX, PosY, Width, Height, BoxColor);
 
     Vector2 textBounds = MeasureTextEx(TextFont, ElementCache[ID].c_str(), FontSize, 1);
     DrawTextEx(TextFont, ElementCache[ID].c_str(),
-               (Vector2){PosX+10, PosY+Height/2-textBounds.y/2},
+               (Vector2){_PosX+10, PosY+Height/2-textBounds.y/2},
                FontSize, 1, TextColor);
 }
 
@@ -120,7 +132,7 @@ void GUI::MainEventLoop(string DPATH) {
                 (*EventsList[Element])(); // Run OnClick Command if not NULL.
             }
         }
-        else if (ElementType[Element] == ElementTypes::TextBox) {
+        else if (ElementType[Element] == ElementTypes::TextBox) { //FIXME: Going from textbox to textbox will not remove blinker from box.
             UserInputBuffer = ElementCache[Element];
             SelectedUserInput = Element;
         }
@@ -130,7 +142,7 @@ void GUI::MainEventLoop(string DPATH) {
         if (SelectedUserInput != -1) {
             int code = GetCharPressed();
             if (code != 0) {
-                if (BlinkerState) {
+                if (BlinkerState) { //TODO: Check if string exceeds length of text box (get string x + 10 + 10 and box x)
                     UserInputBuffer = UserInputBuffer.substr(0, UserInputBuffer.size()-1) + char(code) + "|";
                 } else {
                     UserInputBuffer = UserInputBuffer + char(code);
