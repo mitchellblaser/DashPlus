@@ -87,8 +87,10 @@ void GUI::TextBox(int ID, int PosX, int PosY, string PlaceholderText, int Width,
         ElementCache[ID] = PlaceholderText;
     }
 
-    Rectangle r = {_PosX, PosY, Width, Height};
-    // DrawRectangleRounded(r, 0.5, 4, BoxColor);
+    if (SelectedUserInput == ID) {
+        DrawRectangle(_PosX-HighlightBorderSize, PosY-HighlightBorderSize, Width+HighlightBorderSize*2, Height+HighlightBorderSize*2, BLUE);
+    }
+
     DrawRectangle(_PosX, PosY, Width, Height, BoxColor);
 
     Vector2 textBounds = MeasureTextEx(TextFont, ElementCache[ID].c_str(), FontSize, 1);
@@ -125,8 +127,11 @@ int GUI::GetClickedElement() {
 * @param <std::string> DPATH: Root data path to reference for font loading, etc.
 */
 void GUI::MainEventLoop(string DPATH) {
-    int Element = GetClickedElement(); //TODO: Click away from element to stop capturing input
+    //TODO: Border Highlight Selected Element.
+    //TODO: Click away from element to stop capturing input
     //TODO: Add OnFocusLost and OnFocusCaptured Events.
+    int Element = GetClickedElement(); 
+    
     if (Element != -1) {
 
         if (ElementCache[SelectedUserInput] != "") {
@@ -172,6 +177,9 @@ void GUI::MainEventLoop(string DPATH) {
                 else { debounceTimer.Reset(); }
                 if (IsKeyDown(KEY_ENTER)) {
                     SelectedUserInput = -1;
+                }
+                if (IsKeyDown(KEY_TAB)) {
+                    //TODO: TAB Switches Elements.
                 }
             }
             ElementCache[SelectedUserInput] = UserInputBuffer;

@@ -51,6 +51,7 @@ class GUI {
         int PreviousBlinkCapture = -1;
         void _killBlinker();
         bool killBlinker = false;
+        double HighlightBorderSize = 1.5;
 };
 
 #endif
