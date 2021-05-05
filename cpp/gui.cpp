@@ -48,7 +48,6 @@ void GUI::Button(int ID, int PosX, int PosY, string ButtonText, int Width, int H
                FontSize, 1, TextColor);
 }
 
-//TODO: Update docstring with label things
 /**
 * Create a Text Box and Draw on the Raylib window.
 *
@@ -62,6 +61,9 @@ void GUI::Button(int ID, int PosX, int PosY, string ButtonText, int Width, int H
 * @param <raylib::Font> TextFont: Font for the Text Box to use.
 * @param <int> FontSize: Font size for the Text Box to use.
 * @param <raylib::Color> TextColor: Foreground color of the Text Box.
+* @param <bool> ShowLabel: Show a label alongside the Text Box (optional)
+* @param <std::string> LabelText: Text to show in the label (optional)
+* @param <int> LabelPadding: How much space to leave between the label and Text Box. (default=120)
 */
 void GUI::TextBox(int ID, int PosX, int PosY, string PlaceholderText, int Width, int Height,
                   Color BoxColor, Font TextFont, int FontSize, Color TextColor,
