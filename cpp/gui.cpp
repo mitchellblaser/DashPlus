@@ -125,8 +125,8 @@ int GUI::GetClickedElement() {
 * @param <std::string> DPATH: Root data path to reference for font loading, etc.
 */
 void GUI::MainEventLoop(string DPATH) {
-    int Element = GetClickedElement();
-
+    int Element = GetClickedElement(); //TODO: Click away from element to stop capturing input
+    //TODO: Add OnFocusLost and OnFocusCaptured Events.
     if (Element != -1) {
         SelectedUserInput = -1;
         if (ElementType[Element] == ElementTypes::Button) {
