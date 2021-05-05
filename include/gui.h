@@ -31,7 +31,7 @@ class GUI {
         void TextBox(int ID, int PosX, int PosY, string PlaceholderText, int Width, int Height, Color BoxColor, Font TextFont, int FontSize, Color TextColor, bool ShowLabel=false, string LabelText="", int LabelPadding=120);
         void MainEventLoop(string DPATH);
         int GetClickedElement();
-        string GetTextFromID(int ID);
+        string GetTextFromElement(int ID);
     private:
         Fonts fonts;
         Timer debounceTimer{100, true};

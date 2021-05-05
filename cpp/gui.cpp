@@ -141,7 +141,7 @@ void GUI::MainEventLoop(string DPATH) {
                 (*EventsList[Element])(); // Run OnClick Command if not NULL.
             }
         }
-        else if (ElementType[Element] == ElementTypes::TextBox) { //FIXME: Going from textbox to textbox will not remove blinker from box.
+        else if (ElementType[Element] == ElementTypes::TextBox) {
             UserInputBuffer = ElementCache[Element];
             SelectedUserInput = Element;
         }
@@ -200,7 +200,7 @@ void GUI::MainEventLoop(string DPATH) {
     }
 }
 
-string GUI::GetTextFromID(int ID) {
+string GUI::GetTextFromElement(int ID) {
     string out = ElementCache[ID];
     if (out.substr(ElementCache[ID].size()-1, ElementCache[ID].size()) == "|") {
         out = out.substr(0, ElementCache[ID].size()-1);

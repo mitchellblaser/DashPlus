@@ -14,7 +14,7 @@ string DPATH;
 using namespace std;
 
 void Debug() {
-    std::cout << gui.GetTextFromID(1) << std::endl;
+    std::cout << gui.GetTextFromElement(1) << std::endl;
 }
 
 int main(int argc, char* argv[]) {
