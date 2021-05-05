@@ -202,8 +202,10 @@ void GUI::MainEventLoop(string DPATH) {
 
 string GUI::GetTextFromElement(int ID) {
     string out = ElementCache[ID];
-    if (out.substr(ElementCache[ID].size()-1, ElementCache[ID].size()) == "|") {
-        out = out.substr(0, ElementCache[ID].size()-1);
+    if (out != "") {
+        if (out.substr(ElementCache[ID].size()-1, ElementCache[ID].size()) == "|") {
+            out = out.substr(0, ElementCache[ID].size()-1);
+        }
     }
     return out;
 }
