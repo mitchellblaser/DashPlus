@@ -20,6 +20,15 @@ void SaveSetupValues() {
     CallExit = true;
 }
 
+bool ShowGrid = true;
+void ToggleGridVisibility() {
+    if (ShowGrid) {
+        ShowGrid = false;
+    } else {
+        ShowGrid = true;
+    }
+}
+
 /**
 * Draw the Setup Window of the application.
 *
@@ -63,10 +72,15 @@ int Main_Draw() {
     gui.MainEventLoop(DPATH);
     //Draw everything here.
     ClearBackground(ColorFromHSV(232, 0.54, 0.41));
-    gui.Grid(0, 0, GetScreenWidth(), GetScreenHeight(), 25, 1, GRAY, true);
+    if (ShowGrid) {
+        gui.Grid(0, 0, GetScreenWidth(), GetScreenHeight(), 25, 1, GRAY, true);
+        gui.Grid(0, 0, GetScreenWidth(), GetScreenHeight(), 50, 1, RAYWHITE);
+    }
 
     gui.WindowFromGrid(0, 0, 16, 10, "Test Window", fonts.BodySmall());
     gui.WindowFromGrid(16, 0, 26, 12, "Settings", fonts.BodySmall());
+
+    gui.Button(3, GetScreenWidth()-120, 20, "Toggle Grid", 100, 50, RAYWHITE, fonts.BodySmall(), 15, BLACK, &ToggleGridVisibility);
 
     //Call the Raylib EndDrawing() function.
     EndDrawing();
@@ -114,6 +128,7 @@ int main(int argc, char* argv[]) {
     while (NeedsSetup) {
         if (Setup_GfxLoop() == 0) { NeedsSetup = false; }
     }
+    gui.ResetGUI();
 
     while (!WindowShouldClose()) {
         if (Main_GfxLoop() == 0) { break; }

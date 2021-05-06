@@ -7,8 +7,12 @@
 * easier GUI creation inside the library.
 */
 GUI::GUI() {
+    ResetGUI();
+}
+
+void GUI::ResetGUI() {
     for (int i = 0; i < MAX_ELEMENTS; i++) {
-        Elements[i].Cache = "$DPEMPTY$";
+        Elements[i] = Element{};
     }
 }
 
