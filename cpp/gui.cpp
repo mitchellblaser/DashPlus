@@ -180,15 +180,15 @@ int GUI::GetClickedElement() {
         for (int i = 0; i < MAX_ELEMENTS; i++) {
             if (MouseX > Elements[i].X1Pos && MouseX < Elements[i].X2Pos && MouseY > Elements[i].Y1Pos && MouseY < Elements[i].Y2Pos) {
                 
-                // if (Elements[i].Type = ElementTypes::Window) {
-                //     if (MouseY < Elements[i].Y1Pos+CurrentGridLayout.Spacing) {
-                //         return i;
-                //     }
-                // } else {
-                //     return i;
-                // }
+                if (Elements[i].Type = ElementTypes::Window) {
+                    if (MouseY < Elements[i].Y1Pos+CurrentGridLayout.Spacing) {
+                        return i;
+                    }
+                } else {
+                    return i;
+                }
 
-                return i;
+                // return i;
             }
         }
     }
@@ -272,13 +272,15 @@ void GUI::MainEventLoop(string DPATH) {
                             if (InitialMouseY < win.Y1Pos+CurrentGridLayout.Spacing) {
                                 double X = GetMouseX()-OffsetX-CurrentGridLayout.Spacing*0.5;
                                 double Y = GetMouseY()-OffsetY-CurrentGridLayout.Spacing*0.5;
-                                //FIXME: Can't use round here - too inaccurate.
+
+                                DrawRectangleLines(GetMouseX()-OffsetX, GetMouseY()-OffsetY, win.X2Pos-win.X1Pos, win.Y2Pos-win.Y1Pos, LIGHTGRAY);
+
                                 rX = round(X/CurrentGridLayout.Spacing)*CurrentGridLayout.Spacing;
                                 rY = round(Y/CurrentGridLayout.Spacing)*CurrentGridLayout.Spacing;
                                 std::cout << "rXrY" << rX << " " << rY << std::endl;
                                 Rectangle r{rX+CurrentGridLayout.Spacing*0.5, rY+CurrentGridLayout.Spacing*0.5, win.X2Pos-win.X1Pos, win.Y2Pos-win.Y1Pos};
 
-                                DrawRectangleLinesEx(r, 5, PINK);
+                                DrawRectangleLinesEx(r, 3, PINK);
                             }
                         }
                     }
