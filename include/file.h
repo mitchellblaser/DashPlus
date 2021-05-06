@@ -8,6 +8,7 @@ http://github.com/mitchellblaser/dashplus
 #include <sys/stat.h>
 #include <iostream>
 #include <stdlib.h>
+#include <fstream>
 
 using namespace std;
 
@@ -27,6 +28,7 @@ class File {
         bool IsFile(string filePath);
         bool IsFolder(string filePath);
         bool MakeFolder(string filePath);
+        void WriteFile(string filePath, string fileData);
     private:
         bool _PathExists(string filePath);
         FileType _CheckFile(string filePath);

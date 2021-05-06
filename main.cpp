@@ -13,9 +13,48 @@ string DPATH;
 
 using namespace std;
 
-void Debug() {
+bool CallExit = false;
+
+void SaveSetupValues() {
     std::cout << gui.GetTextFromElement(1) << std::endl;
     std::cout << gui.GetTextFromElement(2) << std::endl;
+
+    file.WriteFile(DPATH + ".dpdata/SETUP", "{ipAddrTarget:"+gui.GetTextFromElement(1)+",updateInterval:"+gui.GetTextFromElement(2)+"}");
+
+    CallExit = true;
+}
+
+/**
+* Draw the Setup Window of the application.
+*
+* @return <int> - 0 for Window Exit or 1 for Window Continued.
+*/
+int Setup_Draw() {
+    //Call the Raylib BeginDrawing() function.
+    BeginDrawing();
+    //Call the Event Loop here.
+    gui.MainEventLoop(DPATH);
+    //Draw everything here.
+    ClearBackground(ColorFromHSV(232, 0.54, 0.41));
+    DrawTextEx(fonts.Title(), "DashPlus", (Vector2){20,7}, 80, 2, RAYWHITE);
+    DrawTextEx(fonts.Body(), "An FRC Dashboard.", (Vector2){23,77}, 32, 2, RAYWHITE);
+    gui.TextBox(1, 23, 125, "", 200, 35, WHITE, fonts.BodySmall(), 16, BLACK, true, "Server IP Address:");
+    gui.TextBox(2, 23, 165, "", 200, 35, WHITE, fonts.BodySmall(), 16, BLACK, true, "Update Interval:");
+    gui.Button(0, GetScreenWidth()-120, 20, "Save Settings", 100, 50, RAYWHITE, fonts.BodySmall(), 15, BLACK, &SaveSetupValues);
+    //Call the Raylib EndDrawing() function.
+    EndDrawing();
+
+    //Handle Window Exiting - On Raylib condition or our own
+    if (WindowShouldClose() || CallExit) {
+        CloseWindow();
+        //If window should exit, we return 0.
+        return 0;
+    }
+    //If window should not exit, we return 1.
+    return 1;
+}
+int Setup_GfxLoop() {
+    return Setup_Draw();
 }
 
 int main(int argc, char* argv[]) {
@@ -47,24 +86,7 @@ int main(int argc, char* argv[]) {
     }
 
     while (NeedsSetup) {
-        BeginDrawing();
-        gui.MainEventLoop(DPATH);
-
-        ClearBackground(ColorFromHSV(232, 0.54, 0.41));
-        DrawTextEx(fonts.Title(), "DashPlus", (Vector2){20,7}, 80, 2, RAYWHITE);
-        DrawTextEx(fonts.Body(), "An FRC Dashboard.", (Vector2){23,77}, 32, 2, RAYWHITE);
-
-        gui.TextBox(1, 23, 125, "", 200, 35, WHITE, fonts.BodySmall(), 16, BLACK, true, "Server IP Address:");
-        gui.TextBox(2, 23, 165, "", 200, 35, WHITE, fonts.BodySmall(), 16, BLACK, true, "Update Interval:");
-
-        gui.Button(0, GetScreenWidth()-120, 20, "Save Settings", 100, 50, RAYWHITE, fonts.BodySmall(), 15, BLACK, &Debug);
-
-        EndDrawing();
-
-        if (WindowShouldClose()) {
-            CloseWindow();
-            return 0;
-        }
+        if (Setup_GfxLoop() == 0) { return 0; }
     }
 
     while (!WindowShouldClose()) {

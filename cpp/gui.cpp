@@ -223,7 +223,6 @@ string GUI::GetTextFromElement(int ID) {
 int GUI::GetEmptyElementID() {
     for (int i = 1; i < MAX_ELEMENTS; i++) {
         if (!Elements[i].Initialized) {
-            std::cout << i << std::endl;
             return i;
         }
     }

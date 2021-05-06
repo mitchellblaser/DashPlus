@@ -52,3 +52,10 @@ bool File::MakeFolder(string filePath) {
         return false;
     }
 }
+
+void File::WriteFile(string filePath, string fileData) {
+    ofstream f;
+    f.open(filePath);
+    f << fileData;
+    f.close();
+}
