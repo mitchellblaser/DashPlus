@@ -270,8 +270,15 @@ void GUI::MainEventLoop(string DPATH) {
                             double OffsetY = InitialMouseY-win.Y1Pos;
 
                             if (InitialMouseY < win.Y1Pos+CurrentGridLayout.Spacing) {
-                                DrawRectangleLines(GetMouseX()-OffsetX, GetMouseY()-OffsetY, win.X2Pos-win.X1Pos, win.Y2Pos-win.Y1Pos, BLACK);
-                                //Check if we're in the bounds of a grid, draw snappy rect
+                                double X = GetMouseX()-OffsetX-CurrentGridLayout.Spacing*0.5;
+                                double Y = GetMouseY()-OffsetY-CurrentGridLayout.Spacing*0.5;
+                                //FIXME: Can't use round here - too inaccurate.
+                                rX = round(X/CurrentGridLayout.Spacing)*CurrentGridLayout.Spacing;
+                                rY = round(Y/CurrentGridLayout.Spacing)*CurrentGridLayout.Spacing;
+                                std::cout << "rXrY" << rX << " " << rY << std::endl;
+                                Rectangle r{rX+CurrentGridLayout.Spacing*0.5, rY+CurrentGridLayout.Spacing*0.5, win.X2Pos-win.X1Pos, win.Y2Pos-win.Y1Pos};
+
+                                DrawRectangleLinesEx(r, 5, PINK);
                             }
                         }
                     }
@@ -281,6 +288,7 @@ void GUI::MainEventLoop(string DPATH) {
                         //Handle Release Here.
                         InitialMouseX = 0;
                         InitialMouseY = 0;
+                        WinMoved = SelectedUserInput;
                     }
                     WasMouseButtonDown = 0;
                 }
@@ -330,12 +338,14 @@ int GUI::GetEmptyElementID() {
 }
 
 int GUI::WindowHasMoved() { //TODO: Make this return ID when window snapped into place
-    return -1;
+    int w = WinMoved;
+    WinMoved = -1;
+    return w;
 }
 
 Vector2 GUI::GetGridPos(int ID) {
     Vector2 Pos;
-    Pos.x = Elements[ID].X1Pos/CurrentGridLayout.Spacing-0.5;
-    Pos.y = Elements[ID].Y1Pos/CurrentGridLayout.Spacing-0.5;
+    Pos.x = rX/CurrentGridLayout.Spacing;
+    Pos.y = rY/CurrentGridLayout.Spacing;
     return Pos;
 }

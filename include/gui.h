@@ -9,6 +9,7 @@ http://github.com/mitchellblaser/dashplus
 #include <stdio.h>
 #include <stdlib.h>
 #include <chrono>
+#include <math.h>
 #include "fonts.h"
 #include "timer.h"
 
@@ -83,6 +84,9 @@ class GUI {
         int MouseY;
         double InitialMouseX = 0;
         double InitialMouseY = 0;
+        int rX;
+        int rY;
+        int WinMoved = -1;
 
         Color BackgroundColor = Color{255, 255, 255, 240};
         Color TitleBarColor = Color{220, 220, 220, 255};

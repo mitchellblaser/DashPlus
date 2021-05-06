@@ -16,6 +16,8 @@ using namespace std;
 bool CallExit = false;
 int WindowPosX[MAX_ELEMENTS];
 int WindowPosY[MAX_ELEMENTS];
+int WindowPosX2[MAX_ELEMENTS];
+int WindowPosY2[MAX_ELEMENTS];
 
 void SaveSetupValues() {
     file.WriteFile(DPATH + ".dpdata/SETUP", "{ipAddrTarget:"+gui.GetTextFromElement(1)+",updateInterval:"+gui.GetTextFromElement(2)+"}");
@@ -78,17 +80,26 @@ int Main_Draw() {
     ClearBackground(ColorFromHSV(232, 0.54, 0.41));
     if (ShowGrid) {
         gui.Grid(0, 0, GetScreenWidth(), GetScreenHeight(), 25, 1, GRAY, true);
-        gui.Grid(0, 0, GetScreenWidth(), GetScreenHeight(), 50, 1, LIGHTGRAY);
+        // gui.Grid(0, 0, GetScreenWidth(), GetScreenHeight(), 50, 1, LIGHTGRAY);
     }
 
     int WindowMoveCheck = gui.WindowHasMoved();
     if (WindowMoveCheck != -1) {
-        WindowPosX[WindowMoveCheck+1] = gui.GetGridPos(WindowMoveCheck).x;
-        WindowPosY[WindowMoveCheck+1] = gui.GetGridPos(WindowMoveCheck).y;
+        std::cout << gui.GetGridPos(WindowMoveCheck).x << " " << WindowPosX[WindowMoveCheck] << std::endl;
+        int DiffX = gui.GetGridPos(WindowMoveCheck).x - WindowPosX[WindowMoveCheck];
+        int DiffY = gui.GetGridPos(WindowMoveCheck).y - WindowPosY[WindowMoveCheck];
+
+        std::cout << "DIFF " << DiffX << " " << DiffY << std::endl;
+
+        WindowPosX2[WindowMoveCheck] = WindowPosX2[WindowMoveCheck] + DiffX;
+        WindowPosY2[WindowMoveCheck] = WindowPosY2[WindowMoveCheck] + DiffY; 
+
+        WindowPosX[WindowMoveCheck] = gui.GetGridPos(WindowMoveCheck).x;
+        WindowPosY[WindowMoveCheck] = gui.GetGridPos(WindowMoveCheck).y;
     }
 
-    gui.WindowFromGrid(0, WindowPosX[0], WindowPosY[0], 16, 10, "Test Window", fonts.BodySmall());
-    gui.WindowFromGrid(1, WindowPosX[1], WindowPosY[1], 26, 12, "Settings", fonts.BodySmall());
+    gui.WindowFromGrid(0, WindowPosX[0], WindowPosY[0], WindowPosX2[0], WindowPosY2[0], "Test Window", fonts.BodySmall());
+    gui.WindowFromGrid(1, WindowPosX[1], WindowPosY[1], WindowPosX2[1], WindowPosY2[1], "Settings", fonts.BodySmall());
 
     gui.Button(2, GetScreenWidth()-120, 20, "Toggle Grid", 100, 50, RAYWHITE, fonts.BodySmall(), 15, BLACK, &ToggleGridVisibility);
     //Call the Event Loop here.
@@ -111,8 +122,12 @@ int Main_GfxLoop() {
         Main_Init = true;
         WindowPosX[0] = 0;
         WindowPosY[0] = 0;
+        WindowPosX2[0] = 16;
+        WindowPosY2[0] = 10;
         WindowPosX[1] = 16;
         WindowPosY[1] = 0;
+        WindowPosX2[1] = 26;
+        WindowPosY2[1] = 12;
     }
     return Main_Draw();
 }
