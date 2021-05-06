@@ -29,12 +29,13 @@ class GUI {
         GUI();
         void Button(int ID, int PosX, int PosY, string ButtonText, int Width, int Height, Color ButtonColor, Font ButtonFont, int FontSize, Color TextColor, void (*onclick)()=NULL);
         void TextBox(int ID, int PosX, int PosY, string PlaceholderText, int Width, int Height, Color BoxColor, Font TextFont, int FontSize, Color TextColor, bool ShowLabel=false, string LabelText="", int LabelPadding=120);
+        void Grid(double PosX, double PosY, double Width, double Height, double Spacing, double Radius, Color GridColor, bool GenerateLayoutFromGrid=false);
+        Vector2 FromGridLayout(int x, int y);
         void MainEventLoop(string DPATH);
         int GetClickedElement();
         string GetTextFromElement(int ID);
         int GetEmptyElementID();
     private:
-
         class Element {
             public:
                 ElementTypes Type;
@@ -56,6 +57,16 @@ class GUI {
         double HighlightBorderSize = 2;
 
         Element Elements[MAX_ELEMENTS];
+
+        class GridLayout {
+            public:
+                double PosX;
+                double PosY;
+                double Width;
+                double Height;
+                double Spacing;
+        };
+        GridLayout CurrentGridLayout;
 
         string UserInputBuffer = "";
         int SelectedUserInput = -1;

@@ -101,6 +101,35 @@ void GUI::TextBox(int ID, int PosX, int PosY, string PlaceholderText, int Width,
                FontSize, 1, TextColor);
 }
 
+//TODO: Make docstring for this function.
+/**
+* Draw a Grid on the Screen.
+*
+* @param <param> Description of the parameter
+* @return Description of the return value
+*/
+void GUI::Grid(double PosX, double PosY, double Width, double Height, double Spacing, double Radius, Color GridColor, bool GenerateLayoutFromGrid) {
+    if (GenerateLayoutFromGrid) {
+        CurrentGridLayout.PosX = PosX;
+        CurrentGridLayout.PosY = PosY;
+        CurrentGridLayout.Width = Width;
+        CurrentGridLayout.Height = Height;
+        CurrentGridLayout.Spacing = Spacing;
+    }
+    for (int x = PosX; x < PosX+Width; x = x + Spacing) {
+        for (int y = PosY; y < PosY+Height; y = y + Spacing) {
+            DrawCircle(x+Spacing/2, y+Spacing/2, Radius, GridColor);
+        }
+    }
+}
+
+Vector2 GUI::FromGridLayout(int x, int y) {
+    Vector2 GL;
+    GL.x = (CurrentGridLayout.Spacing)*x + CurrentGridLayout.PosX + CurrentGridLayout.Spacing/2;
+    GL.y = (CurrentGridLayout.Spacing)*y + CurrentGridLayout.PosY + CurrentGridLayout.Spacing/2;
+    return GL;
+}
+
 /**
 * Mainly used inside the GUI Class, but can also 
 * be used elsewhere. Detects when the mouse clicks an element.
@@ -129,7 +158,6 @@ int GUI::GetClickedElement() {
 * @param <std::string> DPATH: Root data path to reference for font loading, etc.
 */
 void GUI::MainEventLoop(string DPATH) {
-    //TODO: Border Highlight Selected Element.
     //TODO: Click away from element to stop capturing input
     //TODO: Add OnFocusLost and OnFocusCaptured Events.
     int Element = GetClickedElement(); 

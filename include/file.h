@@ -29,6 +29,7 @@ class File {
         bool IsFolder(string filePath);
         bool MakeFolder(string filePath);
         void WriteFile(string filePath, string fileData);
+        string ReadFile(string filePath);
     private:
         bool _PathExists(string filePath);
         FileType _CheckFile(string filePath);

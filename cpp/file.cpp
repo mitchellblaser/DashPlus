@@ -59,3 +59,7 @@ void File::WriteFile(string filePath, string fileData) {
     f << fileData;
     f.close();
 }
+
+string File::ReadFile(string filePath) { //TODO: Implement this function
+
+}
