@@ -32,26 +32,42 @@ class GUI {
         void MainEventLoop(string DPATH);
         int GetClickedElement();
         string GetTextFromElement(int ID);
+        int GetEmptyElementID();
     private:
+
+        class Element {
+            public:
+                ElementTypes Type;
+                string Cache;
+                double X1Pos;
+                double Y1Pos;
+                double X2Pos;
+                double Y2Pos;
+
+                void (*Event)() = NULL;
+        };
+
         Fonts fonts;
+        
         Timer debounceTimer{100, true};
         Timer inputBlinker{750};
-        bool _initComplete = false;
-        int GUIButtonCount = 0;
-        int ButtonsX1[MAX_ELEMENTS] = {};
-        int ButtonsY1[MAX_ELEMENTS] = {};
-        int ButtonsX2[MAX_ELEMENTS] = {};
-        int ButtonsY2[MAX_ELEMENTS] = {};
-        ElementTypes ElementType[MAX_ELEMENTS] = {};
-        string ElementCache[MAX_ELEMENTS] = {};
-        void (*EventsList[MAX_ELEMENTS])();
+
+        double HighlightBorderSize = 2;
+
+        // ElementTypes ElementType[MAX_ELEMENTS] = {};
+        // string ElementCache[MAX_ELEMENTS] = {};
+        // int ButtonsX1[MAX_ELEMENTS] = {};
+        // int ButtonsY1[MAX_ELEMENTS] = {};
+        // int ButtonsX2[MAX_ELEMENTS] = {};
+        // int ButtonsY2[MAX_ELEMENTS] = {};
+        // void (*EventsList[MAX_ELEMENTS])();
+
+        Element Elements[MAX_ELEMENTS];
+
         string UserInputBuffer = "";
         int SelectedUserInput = -1;
         bool BlinkerState = false;
         int PreviousBlinkCapture = -1;
-        void _killBlinker();
-        bool killBlinker = false;
-        double HighlightBorderSize = 2;
 };
 
 #endif

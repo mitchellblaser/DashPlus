@@ -8,7 +8,7 @@
 */
 GUI::GUI() {
     for (int i = 0; i < MAX_ELEMENTS; i++) {
-        ElementCache[i] = "$DPEMPTY$";
+        Elements[i].Cache = "$DPEMPTY$";
     }
 }
 
@@ -28,22 +28,22 @@ GUI::GUI() {
 * @param <void(*)()> *onclick: Pointer to a function to run when the button is clicked. Optional.
 */
 void GUI::Button(int ID, int PosX, int PosY, string ButtonText, int Width, int Height, Color ButtonColor, Font ButtonFont, int FontSize, Color TextColor, void (*onclick)()) {
-    ButtonsX1[ID] = PosX;
-    ButtonsY1[ID] = PosY;
-    ButtonsX2[ID] = PosX+Width;
-    ButtonsY2[ID] = PosY+Height;
-    ElementType[ID] = ElementTypes::Button;
-    EventsList[ID] = onclick;
+    Elements[ID].X1Pos = PosX;
+    Elements[ID].Y1Pos = PosY;
+    Elements[ID].X2Pos = PosX+Width;
+    Elements[ID].Y2Pos = PosY+Height;
+    Elements[ID].Type = ElementTypes::Button;
+    Elements[ID].Event = onclick;
 
-    if (ElementCache[ID] == "$DPEMPTY$") {
-        ElementCache[ID] = ButtonText;
+    if (Elements[ID].Cache == "$DPEMPTY$") {
+        Elements[ID].Cache = ButtonText;
     }
 
     Rectangle r = {PosX, PosY, Width, Height};
     DrawRectangleRounded(r, 0.5, 4, ButtonColor);
 
-    Vector2 textBounds = MeasureTextEx(ButtonFont, ElementCache[ID].c_str(), FontSize, 1);
-    DrawTextEx(ButtonFont, ElementCache[ID].c_str(),
+    Vector2 textBounds = MeasureTextEx(ButtonFont, Elements[ID].Cache.c_str(), FontSize, 1);
+    DrawTextEx(ButtonFont, Elements[ID].Cache.c_str(),
                (Vector2){PosX+Width/2-textBounds.x/2, PosY+Height/2-textBounds.y/2},
                FontSize, 1, TextColor);
 }
@@ -77,14 +77,14 @@ void GUI::TextBox(int ID, int PosX, int PosY, string PlaceholderText, int Width,
         _PosX = PosX+LabelPadding;
     }
 
-    ButtonsX1[ID] = _PosX;
-    ButtonsY1[ID] = PosY;
-    ButtonsX2[ID] = _PosX+Width;
-    ButtonsY2[ID] = PosY+Height;
-    ElementType[ID] = ElementTypes::TextBox;
+    Elements[ID].X1Pos = _PosX;
+    Elements[ID].Y1Pos = PosY;
+    Elements[ID].X2Pos = _PosX+Width;
+    Elements[ID].Y2Pos = PosY+Height;
+    Elements[ID].Type = ElementTypes::TextBox;
 
-    if (ElementCache[ID] == "$DPEMPTY$") {
-        ElementCache[ID] = PlaceholderText;
+    if (Elements[ID].Cache == "$DPEMPTY$") {
+        Elements[ID].Cache = PlaceholderText;
     }
 
     if (SelectedUserInput == ID) {
@@ -93,8 +93,8 @@ void GUI::TextBox(int ID, int PosX, int PosY, string PlaceholderText, int Width,
 
     DrawRectangle(_PosX, PosY, Width, Height, BoxColor);
 
-    Vector2 textBounds = MeasureTextEx(TextFont, ElementCache[ID].c_str(), FontSize, 1);
-    DrawTextEx(TextFont, ElementCache[ID].c_str(),
+    Vector2 textBounds = MeasureTextEx(TextFont, Elements[ID].Cache.c_str(), FontSize, 1);
+    DrawTextEx(TextFont, Elements[ID].Cache.c_str(),
                (Vector2){_PosX+10, PosY+Height/2-textBounds.y/2},
                FontSize, 1, TextColor);
 }
@@ -112,7 +112,7 @@ int GUI::GetClickedElement() {
 
     if (MouseClicked) {
         for (int i = 0; i < MAX_ELEMENTS; i++) {
-            if (MouseX > ButtonsX1[i] && MouseX < ButtonsX2[i] && MouseY > ButtonsY1[i] && MouseY < ButtonsY2[i]) {
+            if (MouseX > Elements[i].X1Pos && MouseX < Elements[i].X2Pos && MouseY > Elements[i].Y1Pos && MouseY < Elements[i].Y2Pos) {
                 return i;
             }
         }
@@ -134,20 +134,20 @@ void GUI::MainEventLoop(string DPATH) {
     
     if (Element != -1) {
 
-        if (ElementCache[SelectedUserInput] != "") {
-            if (ElementCache[SelectedUserInput].substr(UserInputBuffer.size()-1, UserInputBuffer.size()) == "|") {
-                ElementCache[SelectedUserInput] = ElementCache[SelectedUserInput].substr(0, UserInputBuffer.size()-1);
+        if (Elements[SelectedUserInput].Cache != "") {
+            if (Elements[SelectedUserInput].Cache.substr(UserInputBuffer.size()-1, UserInputBuffer.size()) == "|") {
+                Elements[SelectedUserInput].Cache = Elements[SelectedUserInput].Cache.substr(0, UserInputBuffer.size()-1);
             }
         }
 
         SelectedUserInput = -1;
-        if (ElementType[Element] == ElementTypes::Button) {
-            if (EventsList[Element] != 0) {
-                (*EventsList[Element])(); // Run OnClick Command if not NULL.
+        if (Elements[Element].Type == ElementTypes::Button) {
+            if (Elements[Element].Event != 0) {
+                (*Elements[Element].Event)();
             }
         }
-        else if (ElementType[Element] == ElementTypes::TextBox) {
-            UserInputBuffer = ElementCache[Element];
+        else if (Elements[Element].Type == ElementTypes::TextBox) {
+            UserInputBuffer = Elements[Element].Cache;
             SelectedUserInput = Element;
         }
     }
@@ -182,7 +182,7 @@ void GUI::MainEventLoop(string DPATH) {
                     //TODO: TAB Switches Elements.
                 }
             }
-            ElementCache[SelectedUserInput] = UserInputBuffer;
+            Elements[SelectedUserInput].Cache = UserInputBuffer;
 
             inputBlinker.Tick();
             if (inputBlinker.AtTarget()) {
@@ -200,7 +200,7 @@ void GUI::MainEventLoop(string DPATH) {
         } else {
             if (BlinkerState) {
                 UserInputBuffer = UserInputBuffer.substr(0, UserInputBuffer.size()-1);
-                ElementCache[PreviousBlinkCapture] = UserInputBuffer;
+                Elements[PreviousBlinkCapture].Cache = UserInputBuffer;
                 PreviousBlinkCapture = -1;
                 BlinkerState = false;
             }
@@ -209,11 +209,15 @@ void GUI::MainEventLoop(string DPATH) {
 }
 
 string GUI::GetTextFromElement(int ID) {
-    string out = ElementCache[ID];
+    string out = Elements[ID].Cache;
     if (out != "") {
-        if (out.substr(ElementCache[ID].size()-1, ElementCache[ID].size()) == "|") {
-            out = out.substr(0, ElementCache[ID].size()-1);
+        if (out.substr(Elements[ID].Cache.size()-1, Elements[ID].Cache.size()) == "|") {
+            out = out.substr(0, Elements[ID].Cache.size()-1);
         }
     }
     return out;
+}
+
+int GUI::GetEmptyElementID() { //TODO: Implement this function
+
 }
