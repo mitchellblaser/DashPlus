@@ -147,6 +147,12 @@ void GUI::Window(double PosX, double PosY, double Width, double Height, string T
     DrawTextEx(TitleFont, Title.c_str(), (Vector2){PosX+10, PosY+CurrentGridLayout.Spacing/2-MeasureTextEx(TitleFont, Title.c_str(), FontSize, 1).y/2}, FontSize, 1, TitleTextColor);
 }
 
+void GUI::WindowFromGrid(int X1, int Y1, int X2, int Y2, string Title, Font TitleFont, float fontSize) {
+    Vector2 WinS = FromGridLayout(X1, Y1);
+    Vector2 WinE = FromGridLayout(X2, Y2);
+    Window(WinS.x, WinS.y, WinE.x-WinS.x, WinE.y-WinS.y, Title, TitleFont, fontSize);
+}
+
 /**
 * Mainly used inside the GUI Class, but can also 
 * be used elsewhere. Detects when the mouse clicks an element.
