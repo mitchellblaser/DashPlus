@@ -134,12 +134,20 @@ Vector2 GUI::FromGridLayout(int x, int y) {
     return GL;
 }
 
-void GUI::Window(double PosX, double PosY, double Width, double Height, string Title, Font TitleFont, float FontSize) {
+void GUI::Window(int ID, double PosX, double PosY, double Width, double Height, string Title, Font TitleFont, float FontSize) {
     Rectangle Rec;
     Rec.x = PosX;
     Rec.y = PosY;
     Rec.width = Width;
     Rec.height = CurrentGridLayout.Spacing;
+    
+    Elements[ID].X1Pos = PosX;
+    Elements[ID].Y1Pos = PosY;
+    Elements[ID].X2Pos = PosX+Width;
+    Elements[ID].Y2Pos = PosY+Height;
+    Elements[ID].Initialized = true;
+    Elements[ID].Type = ElementTypes::Window;
+    Elements[ID].Cache = Title;
 
     DrawRectangleRounded(Rec, 0.5, 4, TitleBarColor);
     Rec.y = Rec.y+10;
@@ -151,10 +159,10 @@ void GUI::Window(double PosX, double PosY, double Width, double Height, string T
     DrawTextEx(TitleFont, Title.c_str(), (Vector2){PosX+10, PosY+CurrentGridLayout.Spacing/2-MeasureTextEx(TitleFont, Title.c_str(), FontSize, 1).y/2}, FontSize, 1, TitleTextColor);
 }
 
-void GUI::WindowFromGrid(int X1, int Y1, int X2, int Y2, string Title, Font TitleFont, float fontSize) {
+void GUI::WindowFromGrid(int ID, int X1, int Y1, int X2, int Y2, string Title, Font TitleFont, float fontSize) {
     Vector2 WinS = FromGridLayout(X1, Y1);
     Vector2 WinE = FromGridLayout(X2, Y2);
-    Window(WinS.x, WinS.y, WinE.x-WinS.x-CurrentGridLayout.Spacing/2, WinE.y-WinS.y-CurrentGridLayout.Spacing/2, Title, TitleFont, fontSize);
+    Window(ID, WinS.x, WinS.y, WinE.x-WinS.x-CurrentGridLayout.Spacing/2, WinE.y-WinS.y-CurrentGridLayout.Spacing/2, Title, TitleFont, fontSize);
 }
 
 /**
@@ -188,15 +196,8 @@ void GUI::MainEventLoop(string DPATH) {
     //TODO: Click away from element to stop capturing input
     //TODO: Add OnFocusLost and OnFocusCaptured Events.
     int Element = GetClickedElement(); 
-    
     if (Element != -1) {
-
-        if (Elements[SelectedUserInput].Cache != "") {
-            if (Elements[SelectedUserInput].Cache.substr(UserInputBuffer.size()-1, UserInputBuffer.size()) == "|") {
-                Elements[SelectedUserInput].Cache = Elements[SelectedUserInput].Cache.substr(0, UserInputBuffer.size()-1);
-            }
-        }
-
+        int _SelectedUserInput = SelectedUserInput;
         SelectedUserInput = -1;
         if (Elements[Element].Type == ElementTypes::Button) {
             if (Elements[Element].Event != 0) {
@@ -204,7 +205,15 @@ void GUI::MainEventLoop(string DPATH) {
             }
         }
         else if (Elements[Element].Type == ElementTypes::TextBox) {
+            if (Elements[_SelectedUserInput].Cache != "") {
+                if (Elements[_SelectedUserInput].Cache.substr(UserInputBuffer.size()-1, UserInputBuffer.size()) == "|") {
+                    Elements[_SelectedUserInput].Cache = Elements[_SelectedUserInput].Cache.substr(0, UserInputBuffer.size()-1);
+                }
+            }
             UserInputBuffer = Elements[Element].Cache;
+            SelectedUserInput = Element;
+        }
+        else if (Elements[Element].Type == ElementTypes::Window) {
             SelectedUserInput = Element;
         }
     }
@@ -237,6 +246,11 @@ void GUI::MainEventLoop(string DPATH) {
                 }
                 if (IsKeyDown(KEY_TAB)) {
                     //TODO: TAB Switches Elements.
+                }
+                if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
+                    if (Elements[SelectedUserInput].Type == ElementTypes::Window) {
+                        std::cout << "Window" << SelectedUserInput << std::endl;
+                    }
                 }
             }
             Elements[SelectedUserInput].Cache = UserInputBuffer;

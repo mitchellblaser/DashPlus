@@ -74,13 +74,13 @@ int Main_Draw() {
     ClearBackground(ColorFromHSV(232, 0.54, 0.41));
     if (ShowGrid) {
         gui.Grid(0, 0, GetScreenWidth(), GetScreenHeight(), 25, 1, GRAY, true);
-        gui.Grid(0, 0, GetScreenWidth(), GetScreenHeight(), 50, 1, RAYWHITE);
+        gui.Grid(0, 0, GetScreenWidth(), GetScreenHeight(), 50, 1, LIGHTGRAY);
     }
 
-    gui.WindowFromGrid(0, 0, 16, 10, "Test Window", fonts.BodySmall());
-    gui.WindowFromGrid(16, 0, 26, 12, "Settings", fonts.BodySmall());
+    gui.WindowFromGrid(0, 0, 0, 16, 10, "Test Window", fonts.BodySmall());
+    gui.WindowFromGrid(1, 16, 0, 26, 12, "Settings", fonts.BodySmall());
 
-    gui.Button(3, GetScreenWidth()-120, 20, "Toggle Grid", 100, 50, RAYWHITE, fonts.BodySmall(), 15, BLACK, &ToggleGridVisibility);
+    gui.Button(2, GetScreenWidth()-120, 20, "Toggle Grid", 100, 50, RAYWHITE, fonts.BodySmall(), 15, BLACK, &ToggleGridVisibility);
 
     //Call the Raylib EndDrawing() function.
     EndDrawing();
