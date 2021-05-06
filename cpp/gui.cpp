@@ -130,6 +130,23 @@ Vector2 GUI::FromGridLayout(int x, int y) {
     return GL;
 }
 
+void GUI::Window(double PosX, double PosY, double Width, double Height, string Title, Font TitleFont, float FontSize) {
+    Rectangle Rec;
+    Rec.x = PosX;
+    Rec.y = PosY;
+    Rec.width = Width;
+    Rec.height = CurrentGridLayout.Spacing;
+
+    DrawRectangleRounded(Rec, 0.5, 4, TitleBarColor);
+    Rec.y = Rec.y+10;
+    Rec.height = Rec.height-10;
+    DrawRectangleRec(Rec, TitleBarColor);
+    Rec.y = PosY+CurrentGridLayout.Spacing;
+    Rec.height = Height-CurrentGridLayout.Spacing;
+    DrawRectangleRec(Rec, BackgroundColor);
+    DrawTextEx(TitleFont, Title.c_str(), (Vector2){PosX+10, PosY+CurrentGridLayout.Spacing/2-MeasureTextEx(TitleFont, Title.c_str(), FontSize, 1).y/2}, FontSize, 1, TitleTextColor);
+}
+
 /**
 * Mainly used inside the GUI Class, but can also 
 * be used elsewhere. Detects when the mouse clicks an element.

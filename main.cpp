@@ -65,8 +65,9 @@ int Main_Draw() {
     ClearBackground(ColorFromHSV(232, 0.54, 0.41));
     gui.Grid(0, 0, GetScreenWidth(), GetScreenHeight(), 25, 1, GRAY, true);
 
-    Vector2 Bounds = gui.FromGridLayout(10, 10);
-    DrawCircle(Bounds.x, Bounds.y, 2, GREEN);
+    Vector2 WinS = gui.FromGridLayout(0, 0);
+    Vector2 WinE = gui.FromGridLayout(7, 10);
+    gui.Window(WinS.x, WinS.y, WinE.x-WinS.x, WinE.y-WinS.y, "Test Window", fonts.Body(), 16);
 
     //Call the Raylib EndDrawing() function.
     EndDrawing();

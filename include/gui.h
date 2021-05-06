@@ -30,6 +30,7 @@ class GUI {
         void Button(int ID, int PosX, int PosY, string ButtonText, int Width, int Height, Color ButtonColor, Font ButtonFont, int FontSize, Color TextColor, void (*onclick)()=NULL);
         void TextBox(int ID, int PosX, int PosY, string PlaceholderText, int Width, int Height, Color BoxColor, Font TextFont, int FontSize, Color TextColor, bool ShowLabel=false, string LabelText="", int LabelPadding=120);
         void Grid(double PosX, double PosY, double Width, double Height, double Spacing, double Radius, Color GridColor, bool GenerateLayoutFromGrid=false);
+        void Window(double PosX, double PosY, double Width, double Height, string Title="", Font TitleFont=GetFontDefault(), float FontSize=13);
         Vector2 FromGridLayout(int x, int y);
         void MainEventLoop(string DPATH);
         int GetClickedElement();
@@ -72,6 +73,10 @@ class GUI {
         int SelectedUserInput = -1;
         bool BlinkerState = false;
         int PreviousBlinkCapture = -1;
+
+        Color BackgroundColor = Color{255, 255, 255, 240};
+        Color TitleBarColor = Color{220, 220, 220, 255};
+        Color TitleTextColor = BLACK;
 };
 
 #endif
