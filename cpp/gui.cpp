@@ -150,7 +150,7 @@ void GUI::Window(double PosX, double PosY, double Width, double Height, string T
 void GUI::WindowFromGrid(int X1, int Y1, int X2, int Y2, string Title, Font TitleFont, float fontSize) {
     Vector2 WinS = FromGridLayout(X1, Y1);
     Vector2 WinE = FromGridLayout(X2, Y2);
-    Window(WinS.x, WinS.y, WinE.x-WinS.x, WinE.y-WinS.y, Title, TitleFont, fontSize);
+    Window(WinS.x, WinS.y, WinE.x-WinS.x-CurrentGridLayout.Spacing/2, WinE.y-WinS.y-CurrentGridLayout.Spacing/2, Title, TitleFont, fontSize);
 }
 
 /**

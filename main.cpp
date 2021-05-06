@@ -65,7 +65,8 @@ int Main_Draw() {
     ClearBackground(ColorFromHSV(232, 0.54, 0.41));
     gui.Grid(0, 0, GetScreenWidth(), GetScreenHeight(), 25, 1, GRAY, true);
 
-    gui.WindowFromGrid(0, 0, 16, 10, "Test Window", fonts.BodySmall(), 16);
+    gui.WindowFromGrid(0, 0, 16, 10, "Test Window", fonts.BodySmall());
+    gui.WindowFromGrid(16, 0, 26, 12, "Settings", fonts.BodySmall());
 
     //Call the Raylib EndDrawing() function.
     EndDrawing();
