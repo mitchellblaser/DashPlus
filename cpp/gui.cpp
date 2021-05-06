@@ -34,6 +34,7 @@ void GUI::Button(int ID, int PosX, int PosY, string ButtonText, int Width, int H
     Elements[ID].Y2Pos = PosY+Height;
     Elements[ID].Type = ElementTypes::Button;
     Elements[ID].Event = onclick;
+    Elements[ID].Initialized = true;
 
     if (Elements[ID].Cache == "$DPEMPTY$") {
         Elements[ID].Cache = ButtonText;
@@ -82,6 +83,7 @@ void GUI::TextBox(int ID, int PosX, int PosY, string PlaceholderText, int Width,
     Elements[ID].X2Pos = _PosX+Width;
     Elements[ID].Y2Pos = PosY+Height;
     Elements[ID].Type = ElementTypes::TextBox;
+    Elements[ID].Initialized = true;
 
     if (Elements[ID].Cache == "$DPEMPTY$") {
         Elements[ID].Cache = PlaceholderText;
@@ -218,6 +220,11 @@ string GUI::GetTextFromElement(int ID) {
     return out;
 }
 
-int GUI::GetEmptyElementID() { //TODO: Implement this function
-
+int GUI::GetEmptyElementID() {
+    for (int i = 1; i < MAX_ELEMENTS; i++) {
+        if (!Elements[i].Initialized) {
+            std::cout << i << std::endl;
+            return i;
+        }
+    }
 }

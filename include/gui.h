@@ -43,6 +43,7 @@ class GUI {
                 double Y1Pos;
                 double X2Pos;
                 double Y2Pos;
+                bool Initialized = false;
 
                 void (*Event)() = NULL;
         };
@@ -53,14 +54,6 @@ class GUI {
         Timer inputBlinker{750};
 
         double HighlightBorderSize = 2;
-
-        // ElementTypes ElementType[MAX_ELEMENTS] = {};
-        // string ElementCache[MAX_ELEMENTS] = {};
-        // int ButtonsX1[MAX_ELEMENTS] = {};
-        // int ButtonsY1[MAX_ELEMENTS] = {};
-        // int ButtonsX2[MAX_ELEMENTS] = {};
-        // int ButtonsY2[MAX_ELEMENTS] = {};
-        // void (*EventsList[MAX_ELEMENTS])();
 
         Element Elements[MAX_ELEMENTS];
 
