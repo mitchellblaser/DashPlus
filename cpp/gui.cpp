@@ -180,7 +180,7 @@ int GUI::GetClickedElement() {
         for (int i = 0; i < MAX_ELEMENTS; i++) {
             if (MouseX > Elements[i].X1Pos && MouseX < Elements[i].X2Pos && MouseY > Elements[i].Y1Pos && MouseY < Elements[i].Y2Pos) {
                 
-                if (Elements[i].Type = ElementTypes::Window) {
+                if (Elements[i].Type == ElementTypes::Window) {
                     if (MouseY < Elements[i].Y1Pos+CurrentGridLayout.Spacing) {
                         return i;
                     }
