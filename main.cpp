@@ -14,6 +14,8 @@ string DPATH;
 using namespace std;
 
 bool CallExit = false;
+int WindowPosX[MAX_ELEMENTS];
+int WindowPosY[MAX_ELEMENTS];
 
 void SaveSetupValues() {
     file.WriteFile(DPATH + ".dpdata/SETUP", "{ipAddrTarget:"+gui.GetTextFromElement(1)+",updateInterval:"+gui.GetTextFromElement(2)+"}");
@@ -59,7 +61,11 @@ int Setup_Draw() {
     //If window should not exit, we return 1.
     return 1;
 }
+bool Setup_Init = false;
 int Setup_GfxLoop() {
+    if (!Setup_Init) {
+        Setup_Init = true;
+    }
     return Setup_Draw();
 }
 
@@ -75,8 +81,14 @@ int Main_Draw() {
         gui.Grid(0, 0, GetScreenWidth(), GetScreenHeight(), 50, 1, LIGHTGRAY);
     }
 
-    gui.WindowFromGrid(0, 0, 0, 16, 10, "Test Window", fonts.BodySmall());
-    gui.WindowFromGrid(1, 16, 0, 26, 12, "Settings", fonts.BodySmall());
+    int WindowMoveCheck = gui.WindowHasMoved();
+    if (WindowMoveCheck != -1) {
+        WindowPosX[WindowMoveCheck+1] = gui.GetGridPos(WindowMoveCheck).x;
+        WindowPosY[WindowMoveCheck+1] = gui.GetGridPos(WindowMoveCheck).y;
+    }
+
+    gui.WindowFromGrid(0, WindowPosX[0], WindowPosY[0], 16, 10, "Test Window", fonts.BodySmall());
+    gui.WindowFromGrid(1, WindowPosX[1], WindowPosY[1], 26, 12, "Settings", fonts.BodySmall());
 
     gui.Button(2, GetScreenWidth()-120, 20, "Toggle Grid", 100, 50, RAYWHITE, fonts.BodySmall(), 15, BLACK, &ToggleGridVisibility);
     //Call the Event Loop here.
@@ -92,7 +104,16 @@ int Main_Draw() {
     //If window should not exit, we return 1.
     return 1;
 }
+
+bool Main_Init = false;
 int Main_GfxLoop() {
+    if (!Main_Init) {
+        Main_Init = true;
+        WindowPosX[0] = 0;
+        WindowPosY[0] = 0;
+        WindowPosX[1] = 16;
+        WindowPosY[1] = 0;
+    }
     return Main_Draw();
 }
 

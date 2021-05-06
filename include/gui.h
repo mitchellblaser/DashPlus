@@ -39,6 +39,8 @@ class GUI {
         string GetTextFromElement(int ID);
         int GetEmptyElementID();
         void ResetGUI();
+        int WindowHasMoved();
+        Vector2 GetGridPos(int ID);
     private:
         class Element {
             public:

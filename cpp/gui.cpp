@@ -257,14 +257,11 @@ void GUI::MainEventLoop(string DPATH) {
                     //TODO: TAB Switches Elements.
                 }
                 if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
-                    if (WasMouseButtonDown > 3) {
+                    if (WasMouseButtonDown > 0) {
                         if (Elements[SelectedUserInput].Type == ElementTypes::Window) {
-                            std::cout << "Window" << SelectedUserInput << std::endl;
-
                             GUI::Element win = Elements[SelectedUserInput];
 
                             if (InitialMouseX == 0 && InitialMouseY == 0) {
-                                std::cout << "Update Mouse" << std::endl;
                                 InitialMouseX = GetMouseX();
                                 InitialMouseY = GetMouseY();
                             }
@@ -272,14 +269,15 @@ void GUI::MainEventLoop(string DPATH) {
                             double OffsetX = InitialMouseX-win.X1Pos;
                             double OffsetY = InitialMouseY-win.Y1Pos;
 
-                            // DrawRectangleLines(MouseX-InitialMouseX-win.X1Pos+CurrentGridLayout.Spacing, MouseY-InitialMouseY-win.Y1Pos+CurrentGridLayout.Spacing, win.X2Pos-win.X1Pos, win.Y2Pos-win.Y1Pos, BLACK);
-                            DrawRectangleLines(GetMouseX()-OffsetX, GetMouseY()-OffsetY, win.X2Pos-win.X1Pos, win.Y2Pos-win.Y1Pos, BLACK);
+                            if (InitialMouseY < win.Y1Pos+CurrentGridLayout.Spacing) {
+                                DrawRectangleLines(GetMouseX()-OffsetX, GetMouseY()-OffsetY, win.X2Pos-win.X1Pos, win.Y2Pos-win.Y1Pos, BLACK);
+                                //Check if we're in the bounds of a grid, draw snappy rect
+                            }
                         }
                     }
                     WasMouseButtonDown++;
                 } else {
-                    if (WasMouseButtonDown > 3) {
-                        std::cout << "Cleared Intiial Mouse Pos." << std::endl;
+                    if (WasMouseButtonDown > 0) {
                         //Handle Release Here.
                         InitialMouseX = 0;
                         InitialMouseY = 0;
@@ -329,4 +327,15 @@ int GUI::GetEmptyElementID() {
             return i;
         }
     }
+}
+
+int GUI::WindowHasMoved() { //TODO: Make this return ID when window snapped into place
+    return -1;
+}
+
+Vector2 GUI::GetGridPos(int ID) {
+    Vector2 Pos;
+    Pos.x = Elements[ID].X1Pos/CurrentGridLayout.Spacing-0.5;
+    Pos.y = Elements[ID].Y1Pos/CurrentGridLayout.Spacing-0.5;
+    return Pos;
 }
