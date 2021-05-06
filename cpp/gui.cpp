@@ -273,11 +273,10 @@ void GUI::MainEventLoop(string DPATH) {
                                 double X = GetMouseX()-OffsetX-CurrentGridLayout.Spacing*0.5;
                                 double Y = GetMouseY()-OffsetY-CurrentGridLayout.Spacing*0.5;
 
-                                DrawRectangleLines(GetMouseX()-OffsetX, GetMouseY()-OffsetY, win.X2Pos-win.X1Pos, win.Y2Pos-win.Y1Pos, LIGHTGRAY);
+                                // DrawRectangleLines(GetMouseX()-OffsetX, GetMouseY()-OffsetY, win.X2Pos-win.X1Pos, win.Y2Pos-win.Y1Pos, LIGHTGRAY);
 
                                 rX = round(X/CurrentGridLayout.Spacing)*CurrentGridLayout.Spacing;
                                 rY = round(Y/CurrentGridLayout.Spacing)*CurrentGridLayout.Spacing;
-                                std::cout << "rXrY" << rX << " " << rY << std::endl;
                                 Rectangle r{rX+CurrentGridLayout.Spacing*0.5, rY+CurrentGridLayout.Spacing*0.5, win.X2Pos-win.X1Pos, win.Y2Pos-win.Y1Pos};
 
                                 DrawRectangleLinesEx(r, 3, PINK);
