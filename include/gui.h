@@ -76,6 +76,11 @@ class GUI {
         int SelectedUserInput = -1;
         bool BlinkerState = false;
         int PreviousBlinkCapture = -1;
+        int WasMouseButtonDown = false;
+        int MouseX;
+        int MouseY;
+        double InitialMouseX = 0;
+        double InitialMouseY = 0;
 
         Color BackgroundColor = Color{255, 255, 255, 240};
         Color TitleBarColor = Color{220, 220, 220, 255};

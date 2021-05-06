@@ -172,13 +172,22 @@ void GUI::WindowFromGrid(int ID, int X1, int Y1, int X2, int Y2, string Title, F
 * @return <int> Index of Element Clicked.
 */
 int GUI::GetClickedElement() {
-    int MouseX = GetMouseX();
-    int MouseY = GetMouseY();
+    MouseX = GetMouseX();
+    MouseY = GetMouseY();
     bool MouseClicked = IsMouseButtonPressed(MOUSE_LEFT_BUTTON);
 
     if (MouseClicked) {
         for (int i = 0; i < MAX_ELEMENTS; i++) {
             if (MouseX > Elements[i].X1Pos && MouseX < Elements[i].X2Pos && MouseY > Elements[i].Y1Pos && MouseY < Elements[i].Y2Pos) {
+                
+                // if (Elements[i].Type = ElementTypes::Window) {
+                //     if (MouseY < Elements[i].Y1Pos+CurrentGridLayout.Spacing) {
+                //         return i;
+                //     }
+                // } else {
+                //     return i;
+                // }
+
                 return i;
             }
         }
@@ -248,9 +257,34 @@ void GUI::MainEventLoop(string DPATH) {
                     //TODO: TAB Switches Elements.
                 }
                 if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
-                    if (Elements[SelectedUserInput].Type == ElementTypes::Window) {
-                        std::cout << "Window" << SelectedUserInput << std::endl;
+                    if (WasMouseButtonDown > 3) {
+                        if (Elements[SelectedUserInput].Type == ElementTypes::Window) {
+                            std::cout << "Window" << SelectedUserInput << std::endl;
+
+                            GUI::Element win = Elements[SelectedUserInput];
+
+                            if (InitialMouseX == 0 && InitialMouseY == 0) {
+                                std::cout << "Update Mouse" << std::endl;
+                                InitialMouseX = GetMouseX();
+                                InitialMouseY = GetMouseY();
+                            }
+
+                            double OffsetX = InitialMouseX-win.X1Pos;
+                            double OffsetY = InitialMouseY-win.Y1Pos;
+
+                            // DrawRectangleLines(MouseX-InitialMouseX-win.X1Pos+CurrentGridLayout.Spacing, MouseY-InitialMouseY-win.Y1Pos+CurrentGridLayout.Spacing, win.X2Pos-win.X1Pos, win.Y2Pos-win.Y1Pos, BLACK);
+                            DrawRectangleLines(GetMouseX()-OffsetX, GetMouseY()-OffsetY, win.X2Pos-win.X1Pos, win.Y2Pos-win.Y1Pos, BLACK);
+                        }
                     }
+                    WasMouseButtonDown++;
+                } else {
+                    if (WasMouseButtonDown > 3) {
+                        std::cout << "Cleared Intiial Mouse Pos." << std::endl;
+                        //Handle Release Here.
+                        InitialMouseX = 0;
+                        InitialMouseY = 0;
+                    }
+                    WasMouseButtonDown = 0;
                 }
             }
             Elements[SelectedUserInput].Cache = UserInputBuffer;

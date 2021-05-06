@@ -39,8 +39,6 @@ int Setup_Draw() {
     CallExit = false;
     //Call the Raylib BeginDrawing() function.
     BeginDrawing();
-    //Call the Event Loop here.
-    gui.MainEventLoop(DPATH);
     //Draw everything here.
     ClearBackground(ColorFromHSV(232, 0.54, 0.41));
     DrawTextEx(fonts.Title(), "DashPlus", (Vector2){20,7}, 80, 2, RAYWHITE);
@@ -48,6 +46,8 @@ int Setup_Draw() {
     gui.TextBox(1, 23, 125, "", 200, 35, WHITE, fonts.BodySmall(), 16, BLACK, true, "Server IP Address:");
     gui.TextBox(2, 23, 165, "", 200, 35, WHITE, fonts.BodySmall(), 16, BLACK, true, "Update Interval:");
     gui.Button(0, GetScreenWidth()-120, 20, "Save Settings", 100, 50, RAYWHITE, fonts.BodySmall(), 15, BLACK, &SaveSetupValues);
+    //Call the Event Loop here.
+    gui.MainEventLoop(DPATH);
     //Call the Raylib EndDrawing() function.
     EndDrawing();
 
@@ -68,8 +68,6 @@ int Main_Draw() {
     CallExit = false;
     //Call the Raylib BeginDrawing() function.
     BeginDrawing();
-    //Call the Event Loop here.
-    gui.MainEventLoop(DPATH);
     //Draw everything here.
     ClearBackground(ColorFromHSV(232, 0.54, 0.41));
     if (ShowGrid) {
@@ -81,7 +79,8 @@ int Main_Draw() {
     gui.WindowFromGrid(1, 16, 0, 26, 12, "Settings", fonts.BodySmall());
 
     gui.Button(2, GetScreenWidth()-120, 20, "Toggle Grid", 100, 50, RAYWHITE, fonts.BodySmall(), 15, BLACK, &ToggleGridVisibility);
-
+    //Call the Event Loop here.
+    gui.MainEventLoop(DPATH);
     //Call the Raylib EndDrawing() function.
     EndDrawing();
 
