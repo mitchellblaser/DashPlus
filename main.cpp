@@ -16,11 +16,7 @@ using namespace std;
 bool CallExit = false;
 
 void SaveSetupValues() {
-    std::cout << gui.GetTextFromElement(1) << std::endl;
-    std::cout << gui.GetTextFromElement(2) << std::endl;
-
     file.WriteFile(DPATH + ".dpdata/SETUP", "{ipAddrTarget:"+gui.GetTextFromElement(1)+",updateInterval:"+gui.GetTextFromElement(2)+"}");
-
     CallExit = true;
 }
 
@@ -30,6 +26,8 @@ void SaveSetupValues() {
 * @return <int> - 0 for Window Exit or 1 for Window Continued.
 */
 int Setup_Draw() {
+    //Ensure we don't exit straight away.
+    CallExit = false;
     //Call the Raylib BeginDrawing() function.
     BeginDrawing();
     //Call the Event Loop here.
@@ -46,7 +44,6 @@ int Setup_Draw() {
 
     //Handle Window Exiting - On Raylib condition or our own
     if (WindowShouldClose() || CallExit) {
-        CloseWindow();
         //If window should exit, we return 0.
         return 0;
     }
@@ -55,6 +52,31 @@ int Setup_Draw() {
 }
 int Setup_GfxLoop() {
     return Setup_Draw();
+}
+
+int Main_Draw() {
+    //Ensure we don't exit straight away.
+    CallExit = false;
+    //Call the Raylib BeginDrawing() function.
+    BeginDrawing();
+    //Call the Event Loop here.
+    gui.MainEventLoop(DPATH);
+    //Draw everything here.
+    ClearBackground(ColorFromHSV(232, 0.54, 0.41));
+
+    //Call the Raylib EndDrawing() function.
+    EndDrawing();
+
+    //Handle Window Exiting - On Raylib condition or our own
+    if (WindowShouldClose() || CallExit) {
+        //If window should exit, we return 0.
+        return 0;
+    }
+    //If window should not exit, we return 1.
+    return 1;
+}
+int Main_GfxLoop() {
+    return Main_Draw();
 }
 
 int main(int argc, char* argv[]) {
@@ -86,15 +108,11 @@ int main(int argc, char* argv[]) {
     }
 
     while (NeedsSetup) {
-        if (Setup_GfxLoop() == 0) { return 0; }
+        if (Setup_GfxLoop() == 0) { NeedsSetup = false; }
     }
 
     while (!WindowShouldClose()) {
-        BeginDrawing();
-
-        //Main Event Loop
-        
-        EndDrawing();
+        if (Main_GfxLoop() == 0) { break; }
     }
 
     fonts.Unload();
