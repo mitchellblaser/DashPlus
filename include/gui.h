@@ -42,6 +42,8 @@ class GUI {
         void ResetGUI();
         int WindowHasMoved();
         Vector2 GetGridPos(int ID);
+        bool ShouldShowGrid();
+        
     private:
         class Element {
             public:
@@ -87,6 +89,7 @@ class GUI {
         int rX;
         int rY;
         int WinMoved = -1;
+        bool ShowGrid;
 
         Color BackgroundColor = Color{255, 255, 255, 240};
         Color TitleBarColor = Color{220, 220, 220, 255};

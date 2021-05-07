@@ -78,7 +78,7 @@ int Main_Draw() {
     BeginDrawing();
     //Draw everything here.
     ClearBackground(ColorFromHSV(232, 0.54, 0.41));
-    if (ShowGrid) {
+    if (gui.ShouldShowGrid()) {
         gui.Grid(0, 0, GetScreenWidth(), GetScreenHeight(), 25, 1, GRAY, true);
         // gui.Grid(0, 0, GetScreenWidth(), GetScreenHeight(), 50, 1, LIGHTGRAY);
     }
@@ -125,6 +125,11 @@ int Main_GfxLoop() {
         WindowPosY[1] = 0;
         WindowPosX2[1] = 26;
         WindowPosY2[1] = 12;
+        /* We need to do this here so that the GridLayout
+           can be generated in the GUI object.*/
+        BeginDrawing();
+        gui.Grid(0, 0, GetScreenWidth(), GetScreenHeight(), 25, 1, GRAY, true);
+        EndDrawing();
     }
     return Main_Draw();
 }

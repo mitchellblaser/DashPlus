@@ -8,6 +8,7 @@
 */
 GUI::GUI() {
     ResetGUI();
+    ShowGrid = false;
 }
 
 void GUI::ResetGUI() {
@@ -259,6 +260,7 @@ void GUI::MainEventLoop(string DPATH) {
                 if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
                     if (WasMouseButtonDown > 0) {
                         if (Elements[SelectedUserInput].Type == ElementTypes::Window) {
+                            ShowGrid = true;
                             GUI::Element win = Elements[SelectedUserInput];
 
                             if (InitialMouseX == 0 && InitialMouseY == 0) {
@@ -269,7 +271,7 @@ void GUI::MainEventLoop(string DPATH) {
                             double OffsetX = InitialMouseX-win.X1Pos;
                             double OffsetY = InitialMouseY-win.Y1Pos;
 
-                            if (InitialMouseY < win.Y1Pos+CurrentGridLayout.Spacing) {
+                            if (InitialMouseY < win.Y1Pos+CurrentGridLayout.Spacing) { //FIXME: This doesn't check on the X Axis!
                                 double X = GetMouseX()-OffsetX-CurrentGridLayout.Spacing*0.5;
                                 double Y = GetMouseY()-OffsetY-CurrentGridLayout.Spacing*0.5;
 
@@ -290,6 +292,7 @@ void GUI::MainEventLoop(string DPATH) {
                         InitialMouseX = 0;
                         InitialMouseY = 0;
                         WinMoved = SelectedUserInput;
+                        ShowGrid = false;
                     }
                     WasMouseButtonDown = 0;
                 }
@@ -349,4 +352,8 @@ Vector2 GUI::GetGridPos(int ID) {
     Pos.x = rX/CurrentGridLayout.Spacing;
     Pos.y = rY/CurrentGridLayout.Spacing;
     return Pos;
+}
+
+bool GUI::ShouldShowGrid() {
+    return ShowGrid;
 }
