@@ -90,6 +90,7 @@ class GUI {
         int rY;
         int WinMoved = -1;
         bool ShowGrid;
+        bool ValidWindowPosition = false;
 
         Color BackgroundColor = Color{255, 255, 255, 240};
         Color TitleBarColor = Color{220, 220, 220, 255};

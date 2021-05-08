@@ -188,8 +188,6 @@ int GUI::GetClickedElement() {
                 } else {
                     return i;
                 }
-
-                // return i;
             }
         }
     }
@@ -260,6 +258,7 @@ void GUI::MainEventLoop(string DPATH) {
                 if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
                     if (WasMouseButtonDown > 0) {
                         if (Elements[SelectedUserInput].Type == ElementTypes::Window) {
+                            //TODO: Add checks for overlapping windows, change box to red and leave pos as old pos.
                             ShowGrid = true;
                             GUI::Element win = Elements[SelectedUserInput];
 
@@ -271,7 +270,7 @@ void GUI::MainEventLoop(string DPATH) {
                             double OffsetX = InitialMouseX-win.X1Pos;
                             double OffsetY = InitialMouseY-win.Y1Pos;
 
-                            if (InitialMouseY < win.Y1Pos+CurrentGridLayout.Spacing) { //FIXME: This doesn't check on the X Axis!
+                            if (InitialMouseY < win.Y1Pos+CurrentGridLayout.Spacing) {
                                 double X = GetMouseX()-OffsetX-CurrentGridLayout.Spacing*0.5;
                                 double Y = GetMouseY()-OffsetY-CurrentGridLayout.Spacing*0.5;
 
@@ -281,7 +280,26 @@ void GUI::MainEventLoop(string DPATH) {
                                 rY = round(Y/CurrentGridLayout.Spacing)*CurrentGridLayout.Spacing;
                                 Rectangle r{rX+CurrentGridLayout.Spacing*0.5, rY+CurrentGridLayout.Spacing*0.5, win.X2Pos-win.X1Pos, win.Y2Pos-win.Y1Pos};
 
-                                DrawRectangleLinesEx(r, 3, PINK);
+                                ValidWindowPosition = true;
+
+                                for (int i = 0; i < MAX_ELEMENTS; i++) {
+                                    if (!Elements[i].Initialized) {
+                                        break;
+                                    }
+                                    if(i != SelectedUserInput) { //FIXME: This only checks corners, not in between - so collisions are not detected sometimes.
+                                        if (r.x > Elements[i].X1Pos && r.x < Elements[i].X2Pos && r.y > Elements[i].Y1Pos && r.y < Elements[i].Y2Pos ||
+                                            r.x+r.width > Elements[i].X1Pos && r.x+r.width < Elements[i].X2Pos && r.y+r.height > Elements[i].Y1Pos && r.y+r.height < Elements[i].Y2Pos) {
+                                            ValidWindowPosition = false;
+                                        }
+                                    }
+
+                                }
+                                
+                                if (ValidWindowPosition) {
+                                    DrawRectangleLinesEx(r, 3, PINK);
+                                } else {
+                                    DrawRectangleLinesEx(r, 3, RED);
+                                }
                             }
                         }
                     }
@@ -291,8 +309,13 @@ void GUI::MainEventLoop(string DPATH) {
                         //Handle Release Here.
                         InitialMouseX = 0;
                         InitialMouseY = 0;
-                        WinMoved = SelectedUserInput;
+                        if (ValidWindowPosition) {
+                            WinMoved = SelectedUserInput;
+                        } else {
+                            WinMoved = -1;
+                        }
                         ShowGrid = false;
+                        SelectedUserInput = -1;
                     }
                     WasMouseButtonDown = 0;
                 }
@@ -341,7 +364,7 @@ int GUI::GetEmptyElementID() {
     }
 }
 
-int GUI::WindowHasMoved() { //TODO: Make this return ID when window snapped into place
+int GUI::WindowHasMoved() {
     int w = WinMoved;
     WinMoved = -1;
     return w;
