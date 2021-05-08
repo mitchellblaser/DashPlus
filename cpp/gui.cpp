@@ -307,21 +307,23 @@ void GUI::MainEventLoop(string DPATH) {
                 } else {
                     if (WasMouseButtonDown > 0) {
                         //Handle Release Here.
+                        std::cout << "Release " << SelectedUserInput << std::endl;
                         InitialMouseX = 0;
                         InitialMouseY = 0;
                         if (ValidWindowPosition) {
+                            std::cout << "Valid" << std::endl;
                             WinMoved = SelectedUserInput;
                         } else {
+                            std::cout << "Invalid" << std::endl;
                             WinMoved = -1;
                         }
                         ShowGrid = false;
-                        if (Elements[SelectedUserInput].Type == ElementTypes::Window) {
-                            SelectedUserInput = -1;
-                        }
                     }
                     WasMouseButtonDown = 0;
                 }
             }
+
+            std::cout << SelectedUserInput << std::endl;
             Elements[SelectedUserInput].Cache = UserInputBuffer;
 
             inputBlinker.Tick();
@@ -339,7 +341,9 @@ void GUI::MainEventLoop(string DPATH) {
             }
         } else {
             if (BlinkerState) {
-                UserInputBuffer = UserInputBuffer.substr(0, UserInputBuffer.size()-1);
+                if (UserInputBuffer != "") {
+                    UserInputBuffer = UserInputBuffer.substr(0, UserInputBuffer.size()-1);
+                }
                 Elements[PreviousBlinkCapture].Cache = UserInputBuffer;
                 PreviousBlinkCapture = -1;
                 BlinkerState = false;

@@ -84,6 +84,7 @@ int Main_Draw() {
     }
 
     int WindowMoveCheck = gui.WindowHasMoved();
+    std::cout << WindowMoveCheck << std::endl;
     if (WindowMoveCheck != -1) {
         int DiffX = gui.GetGridPos(WindowMoveCheck).x - WindowPosX[WindowMoveCheck];
         int DiffY = gui.GetGridPos(WindowMoveCheck).y - WindowPosY[WindowMoveCheck];
@@ -168,7 +169,9 @@ int main(int argc, char* argv[]) {
     gui.ResetGUI();
 
     while (!WindowShouldClose()) {
-        if (Main_GfxLoop() == 0) { break; }
+        if (Main_GfxLoop() == 0) {
+            break;
+        }
     }
 
     fonts.Unload();
