@@ -50,7 +50,7 @@ void GUI::Button(int ID, float PosX, float PosY, string ButtonText, float Width,
 
     Vector2 textBounds = MeasureTextEx(ButtonFont, Elements[ID].Cache.c_str(), FontSize, 1);
     DrawTextEx(ButtonFont, Elements[ID].Cache.c_str(),
-               (Vector2){PosX+Width/2-textBounds.x/2, PosY+Height/2-textBounds.y/2},
+               Vector2{PosX+Width/2-textBounds.x/2, PosY+Height/2-textBounds.y/2},
                FontSize, 1, TextColor);
 }
 
@@ -79,7 +79,7 @@ void GUI::TextBox(int ID, float PosX, float PosY, string PlaceholderText, float 
 
     if (ShowLabel) {
         Vector2 labelBounds = MeasureTextEx(TextFont, LabelText.c_str(), FontSize, 1);
-        DrawTextEx(TextFont, LabelText.c_str(), (Vector2){PosX,PosY+Height/2-labelBounds.y/2}, 16, 1, RAYWHITE);
+        DrawTextEx(TextFont, LabelText.c_str(), Vector2{PosX,PosY+Height/2-labelBounds.y/2}, 16, 1, RAYWHITE);
         _PosX = PosX+LabelPadding;
     }
 
@@ -102,7 +102,7 @@ void GUI::TextBox(int ID, float PosX, float PosY, string PlaceholderText, float 
 
     Vector2 textBounds = MeasureTextEx(TextFont, Elements[ID].Cache.c_str(), FontSize, 1);
     DrawTextEx(TextFont, Elements[ID].Cache.c_str(),
-               (Vector2){_PosX+10, PosY+Height/2-textBounds.y/2},
+               Vector2{_PosX+10, PosY+Height/2-textBounds.y/2},
                FontSize, 1, TextColor);
 }
 
@@ -157,7 +157,7 @@ void GUI::Window(int ID, float PosX, float PosY, float Width, float Height, stri
     Rec.y = PosY+CurrentGridLayout.Spacing;
     Rec.height = Height-CurrentGridLayout.Spacing;
     DrawRectangleRec(Rec, BackgroundColor);
-    DrawTextEx(TitleFont, Title.c_str(), (Vector2){PosX+10, PosY+CurrentGridLayout.Spacing/2-MeasureTextEx(TitleFont, Title.c_str(), FontSize, 1).y/2}, FontSize, 1, TitleTextColor);
+    DrawTextEx(TitleFont, Title.c_str(), Vector2{PosX+10, PosY+CurrentGridLayout.Spacing/2-MeasureTextEx(TitleFont, Title.c_str(), FontSize, 1).y/2}, FontSize, 1, TitleTextColor);
 }
 
 void GUI::WindowFromGrid(int ID, int X1, int Y1, int X2, int Y2, string Title, Font TitleFont, float fontSize) {

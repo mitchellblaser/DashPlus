@@ -56,7 +56,11 @@ target_include_directories(DashPlus PUBLIC
 
 if(APPLE)
     target_link_libraries(DashPlus ${PROJECT_SOURCE_DIR}/raylib/build/raylib/libraylib.a dl ${CMAKE_THREAD_LIBS_INIT} ${COCOA_LIBRARY} ${COREVIDEO_LIBRARY} ${IOKIT_LIBRARY} ${GLFW_LIBRARY} ${OPENGL_LIBRARY})
-else()
+endif()
+if(UNIX)
     target_link_libraries(DashPlus ${PROJECT_SOURCE_DIR}/raylib/build/raylib/libraylib.a dl ${CMAKE_THREAD_LIBS_INIT})
+endif()
+if(MSVC)
+    target_link_libraries(DashPlus ${PROJECT_SOURCE_DIR}/raylib/build/raylib/Release/raylib.lib ${CMAKE_THREAD_LIBS_INIT})
 endif()
 

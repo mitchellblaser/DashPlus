@@ -45,8 +45,8 @@ int Setup_Draw() {
     BeginDrawing();
     //Draw everything here.
     ClearBackground(ColorFromHSV(232, 0.54, 0.41));
-    DrawTextEx(fonts.Title(), "DashPlus", (Vector2){20,7}, 80, 2, RAYWHITE);
-    DrawTextEx(fonts.Body(), "An FRC Dashboard.", (Vector2){23,77}, 32, 2, RAYWHITE);
+    DrawTextEx(fonts.Title(), "DashPlus", Vector2{20,7}, 80, 2, RAYWHITE);
+    DrawTextEx(fonts.Body(), "An FRC Dashboard.", Vector2{23,77}, 32, 2, RAYWHITE);
     gui.TextBox(1, 23, 125, "", 200, 35, WHITE, fonts.BodySmall(), 16, BLACK, true, "Server IP Address:");
     gui.TextBox(2, 23, 165, "", 200, 35, WHITE, fonts.BodySmall(), 16, BLACK, true, "Update Interval:");
     gui.Button(0, GetScreenWidth()-120, 20, "Save Settings", 100, 50, RAYWHITE, fonts.BodySmall(), 15, BLACK, &SaveSetupValues);
