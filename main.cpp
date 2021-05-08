@@ -84,7 +84,6 @@ int Main_Draw() {
     }
 
     int WindowMoveCheck = gui.WindowHasMoved();
-    std::cout << WindowMoveCheck << std::endl;
     if (WindowMoveCheck != -1) {
         int DiffX = gui.GetGridPos(WindowMoveCheck).x - WindowPosX[WindowMoveCheck];
         int DiffY = gui.GetGridPos(WindowMoveCheck).y - WindowPosY[WindowMoveCheck];

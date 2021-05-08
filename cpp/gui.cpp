@@ -307,14 +307,11 @@ void GUI::MainEventLoop(string DPATH) {
                 } else {
                     if (WasMouseButtonDown > 0) {
                         //Handle Release Here.
-                        std::cout << "Release " << SelectedUserInput << std::endl;
                         InitialMouseX = 0;
                         InitialMouseY = 0;
                         if (ValidWindowPosition) {
-                            std::cout << "Valid" << std::endl;
                             WinMoved = SelectedUserInput;
                         } else {
-                            std::cout << "Invalid" << std::endl;
                             WinMoved = -1;
                         }
                         ShowGrid = false;
@@ -323,7 +320,6 @@ void GUI::MainEventLoop(string DPATH) {
                 }
             }
 
-            std::cout << SelectedUserInput << std::endl;
             Elements[SelectedUserInput].Cache = UserInputBuffer;
 
             inputBlinker.Tick();
