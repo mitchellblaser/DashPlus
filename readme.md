@@ -17,7 +17,7 @@ cd ..
 
 cd raylib
 mkdir build && cd build
-cmake .. -DWITH_EXAMPLES=OFF -GNinja
+cmake .. -DBUILD_EXAMPLES=OFF -GNinja
 ninja
 cd ..
 
