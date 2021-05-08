@@ -55,6 +55,6 @@ cd ..
 mkdir build && cd build
 cmake ..
 devenv /Build Release DashPlus.sln
-./Debug/DashPlus.exe
+./Release/DashPlus.exe
 
 ```
