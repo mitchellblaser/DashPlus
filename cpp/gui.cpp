@@ -315,7 +315,9 @@ void GUI::MainEventLoop(string DPATH) {
                             WinMoved = -1;
                         }
                         ShowGrid = false;
-                        // SelectedUserInput = -1;
+                        if (Elements[SelectedUserInput].Type == ElementTypes::Window) {
+                            SelectedUserInput = -1;
+                        }
                     }
                     WasMouseButtonDown = 0;
                 }
