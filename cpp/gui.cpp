@@ -259,7 +259,6 @@ void GUI::MainEventLoop(string DPATH) {
                     if (WasMouseButtonDown > 0) {
                         if (Elements[SelectedUserInput].Type == ElementTypes::Window) {
                             //TODO: Add checks for overlapping windows, change box to red and leave pos as old pos.
-                            ShowGrid = true;
                             GUI::Element win = Elements[SelectedUserInput];
 
                             if (InitialMouseX == 0 && InitialMouseY == 0) {
@@ -270,7 +269,8 @@ void GUI::MainEventLoop(string DPATH) {
                             double OffsetX = InitialMouseX-win.X1Pos;
                             double OffsetY = InitialMouseY-win.Y1Pos;
 
-                            if (InitialMouseY < win.Y1Pos+CurrentGridLayout.Spacing) {
+                            if (InitialMouseY < win.Y1Pos+CurrentGridLayout.Spacing && InitialMouseY > win.Y1Pos && InitialMouseX < win.X2Pos && InitialMouseX > win.X1Pos) {
+                                ShowGrid = true;
                                 double X = GetMouseX()-OffsetX-CurrentGridLayout.Spacing*0.5;
                                 double Y = GetMouseY()-OffsetY-CurrentGridLayout.Spacing*0.5;
 
