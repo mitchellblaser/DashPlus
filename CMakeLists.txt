@@ -48,7 +48,13 @@ endif()
 
 FILE(GLOB DASHPLUS_SOURCES cpp/*.cpp)
 
+if(MSVC)
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup")
+else()
+endif()
+
 add_executable(DashPlus main.cpp ${DASHPLUS_SOURCES})
+
 target_include_directories(DashPlus PUBLIC
                            ${PROJECT_SOURCE_DIR}/include                           
                            ${PROJECT_SOURCE_DIR}/raylib/build/raylib/include
