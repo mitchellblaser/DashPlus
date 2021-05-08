@@ -4,8 +4,13 @@ Mitchell Blaser 2021.
 http://github.com/mitchellblaser/dashplus
 */
 
+#if defined _MSC_VER
+#include <direct.h>
+#else
 #include <sys/types.h>
 #include <sys/stat.h>
+#endif
+
 #include <iostream>
 #include <stdlib.h>
 #include <fstream>

@@ -45,7 +45,12 @@ File::FileType File::_CheckFile(string filePath) {
 }
 
 bool File::MakeFolder(string filePath) {
+#if defined _MSC_VER
+    _mkdir(filePath.c_str());
+#else
     mkdir(filePath.c_str(), 0777);
+#endif
+
     if (FolderExists(filePath)) {
         return true;
     } else {
