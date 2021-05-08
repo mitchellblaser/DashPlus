@@ -3,7 +3,8 @@
 A customisable FRC Driver Station Dashboard for the New WPILIB Framework.
 
 ## Setting up Build Environment
-Tested working on Ubuntu and macOS.
+Tested working on Ubuntu, macOS and Windows.
+Sadly the MSVC (Microsoft) compiler isn't as nice with the program, and it hasn't had enough work yet to confirm full functionality. It should be useable, however. See the instructions below to build.
 
 Unix Instructions:
 ```bash
