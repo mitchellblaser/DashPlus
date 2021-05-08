@@ -24,7 +24,7 @@ class Fonts {
         Font Title();
         Font BodySmall();
     private:
-        Font fontStore[2] = {0};
+        Font fontStore[3] = {0};
 };
 
 #endif

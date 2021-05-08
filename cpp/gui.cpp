@@ -32,7 +32,7 @@ void GUI::ResetGUI() {
 * @param <raylib::Color> TextColor: Foreground color of the Button.
 * @param <void(*)()> *onclick: Pointer to a function to run when the button is clicked. Optional.
 */
-void GUI::Button(int ID, int PosX, int PosY, string ButtonText, int Width, int Height, Color ButtonColor, Font ButtonFont, int FontSize, Color TextColor, void (*onclick)()) {
+void GUI::Button(int ID, float PosX, float PosY, string ButtonText, float Width, float Height, Color ButtonColor, Font ButtonFont, int FontSize, Color TextColor, void (*onclick)()) {
     Elements[ID].X1Pos = PosX;
     Elements[ID].Y1Pos = PosY;
     Elements[ID].X2Pos = PosX+Width;
@@ -71,11 +71,11 @@ void GUI::Button(int ID, int PosX, int PosY, string ButtonText, int Width, int H
 * @param <std::string> LabelText: Text to show in the label (optional)
 * @param <int> LabelPadding: How much space to leave between the label and Text Box. (default=120)
 */
-void GUI::TextBox(int ID, int PosX, int PosY, string PlaceholderText, int Width, int Height,
+void GUI::TextBox(int ID, float PosX, float PosY, string PlaceholderText, float Width, float Height,
                   Color BoxColor, Font TextFont, int FontSize, Color TextColor,
                   bool ShowLabel, string LabelText, int LabelPadding) {
 
-    int _PosX = PosX;
+    float _PosX = PosX;
 
     if (ShowLabel) {
         Vector2 labelBounds = MeasureTextEx(TextFont, LabelText.c_str(), FontSize, 1);
@@ -113,7 +113,7 @@ void GUI::TextBox(int ID, int PosX, int PosY, string PlaceholderText, int Width,
 * @param <param> Description of the parameter
 * @return Description of the return value
 */
-void GUI::Grid(double PosX, double PosY, double Width, double Height, double Spacing, double Radius, Color GridColor, bool GenerateLayoutFromGrid) {
+void GUI::Grid(float PosX, float PosY, float Width, float Height, float Spacing, double Radius, Color GridColor, bool GenerateLayoutFromGrid) {
     if (GenerateLayoutFromGrid) {
         CurrentGridLayout.PosX = PosX;
         CurrentGridLayout.PosY = PosY;
@@ -135,7 +135,7 @@ Vector2 GUI::FromGridLayout(int x, int y) {
     return GL;
 }
 
-void GUI::Window(int ID, double PosX, double PosY, double Width, double Height, string Title, Font TitleFont, float FontSize) {
+void GUI::Window(int ID, float PosX, float PosY, float Width, float Height, string Title, Font TitleFont, float FontSize) {
     Rectangle Rec;
     Rec.x = PosX;
     Rec.y = PosY;
@@ -278,7 +278,7 @@ void GUI::MainEventLoop(string DPATH) {
 
                                 rX = round(X/CurrentGridLayout.Spacing)*CurrentGridLayout.Spacing;
                                 rY = round(Y/CurrentGridLayout.Spacing)*CurrentGridLayout.Spacing;
-                                Rectangle r{rX+CurrentGridLayout.Spacing*0.5, rY+CurrentGridLayout.Spacing*0.5, win.X2Pos-win.X1Pos, win.Y2Pos-win.Y1Pos};
+                                Rectangle r{static_cast<float>(rX+CurrentGridLayout.Spacing*0.5), static_cast<float>(rY+CurrentGridLayout.Spacing*0.5), static_cast<float>(win.X2Pos-win.X1Pos), static_cast<float>(win.Y2Pos-win.Y1Pos)};
 
                                 ValidWindowPosition = true;
 
@@ -362,6 +362,7 @@ int GUI::GetEmptyElementID() {
             return i;
         }
     }
+    return -1;
 }
 
 int GUI::WindowHasMoved() {

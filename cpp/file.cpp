@@ -61,5 +61,5 @@ void File::WriteFile(string filePath, string fileData) {
 }
 
 string File::ReadFile(string filePath) { //TODO: Implement this function
-
+    return "";
 }
